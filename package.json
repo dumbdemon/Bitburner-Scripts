@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "defs": "node ./updateDefs.js"
+    },
+    "author": "TheSuperButt",
+    "type": "module"
+}
