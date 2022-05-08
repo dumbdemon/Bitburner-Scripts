@@ -22,17 +22,13 @@ export async function main(ns) {
                 var srvhckLvl = ns.getServerRequiredHackingLevel(server);
                 var myHckLvl = ns.getHackingLevel();
                 if (myHckLvl >= srvhckLvl) {
-                    var threads = Math.floor(ns.getServerMaxRam(server) / 4);
+                    try {
+                        var threads = Math.floor(ns.getServerMaxRam(server) / 4);
+                    } catch {
+                        ns.print(`No RAM on ${server.toUpperCase()}!\nSetting threads to 1!`);
+                        threads = 1;
+                    }
                     ns.run("hckthat.js", threads, server);
-                } else {
-                    ns.print(`Hack Lvl {${myHckLvl}} < Required Hack Lvl {${srvhckLvl}}`)
-                }
-            } else {
-                ns.print(`No RAM on ${server.toUpperCase()}!\nSetting threads to 1!`);
-                var srvhckLvl = ns.getServerRequiredHackingLevel(server);
-                var myHckLvl = ns.getHackingLevel();
-                if (myHckLvl >= srvhckLvl) {
-                    ns.run("hckthat.js", 1, server);
                 } else {
                     ns.print(`Hack Lvl {${myHckLvl}} < Required Hack Lvl {${srvhckLvl}}`)
                 }
