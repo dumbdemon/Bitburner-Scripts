@@ -14,6 +14,7 @@ export async function main(ns) {
 				["SQLInject.exe", ns.sqlinject]
 			].filter(wares => ns.fileExists(wares[0])).map(exe => {
 				exe[1](target);
+				ns.print(`Deployed ${exe[0]} on ${target.toUpperCase()}!`)
 			});
 			ns.nuke(target);
 		} catch {

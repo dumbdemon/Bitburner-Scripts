@@ -13,7 +13,6 @@ export async function main(ns) {
     let q = [source];
     Array(30).fill().map(y => q = [...new Set(q.map(s => [s, ns.scan(s)]).flat(2))]);
     q.map(server => {
-        ns.print(server)
         let check = 0;
         for (var i = 0; i < notThese.length; i++) {
             if (notThese[i] == server) {
@@ -38,6 +37,8 @@ export async function main(ns) {
             } else {
                 ns.print(`Hack Lvl {${myHckLvl}} < Required Hack Lvl {${srvhckLvl}}`)
             }
-        } else {ns.print(`${server.toUpperCase()} is not a valid target!`);}
+        } else { ns.print(`${server.toUpperCase()} is not a valid target!`); }
     })
+
+    ns.run("srvCall.js");
 }

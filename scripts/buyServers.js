@@ -14,7 +14,7 @@ export async function main(ns) {
             await ns.scp("hckthat.js", hostname);
             await ns.scp("runner.js", hostname);
             ns.exec("runner.js", hostname);
-            ++i;
         }
+        ++i;
     }
 }
