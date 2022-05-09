@@ -40,5 +40,5 @@ export async function main(ns) {
         } else { ns.print(`${server.toUpperCase()} is not a valid target!`); }
     })
 
-    ns.run("srvCall.js");
+    ns.run("srvCallRunner.js");
 }
