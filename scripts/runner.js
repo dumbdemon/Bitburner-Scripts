@@ -1,6 +1,9 @@
 /** @param {import("../.").NS } ns */
 
 export async function main(ns) {
+    ns.disableLog(`ALL`);
+    ns.print("");
+
     var notThese = [
         "home",
         "CSEC",
@@ -8,37 +11,50 @@ export async function main(ns) {
     ]
     ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
     var source = ns.args[0];
-    if (!source) {source = "home"}
-    ns.print(`Started with source ${source}!`);
-    let q = [source];
-    Array(30).fill().map(y => q = [...new Set(q.map(s => [s, ns.scan(s)]).flat(2))]);
-    q.map(server => {
-        let check = 0;
-        for (var i = 0; i < notThese.length; i++) {
-            if (notThese[i] == server) {
-                check++;
+    let srvCall;
+    if (!source || source == "null") {
+        if (source == "null") {srvCall = 1}
+        source = "home";
+    }
+    ns.print(`Started with source [${source.toUpperCase()}]!`);
+    let tq = [source];
+    let q = [];
+    Array(30).fill().map(y => tq = [...new Set(tq.map(s => [s, ns.scan(s)]).flat(2))]);
+    tq.map(serv => {
+        let chk = notThese.filter(server => server == serv);
+        if (chk.length == 0){
+            if (source == "home") {
+                q.push(serv);
+            } else {
+                if ((ns.getServerMaxRam(serv) != 0)) {
+                    q.push(serv);
+                }
             }
         }
-        if (check == 0) {
-            var srvhckLvl = ns.getServerRequiredHackingLevel(server);
-            var myHckLvl = ns.getHackingLevel();
-            if (myHckLvl >= srvhckLvl) {
-                if (source == "home") {
-                    try {
-                        var threads = Math.floor(ns.getServerMaxRam(server) / 4);
-                        ns.run("hckthat.js", threads, server);
-                    } catch {
-                        ns.print(`No RAM on ${server.toUpperCase()}!\nSetting threads to 1!`);
-                        ns.run("hckthat.js", 1, server);
-                    }
-                } else {
-                    ns.run("hckthat.js", 1, server);
-                }
-            } else {
-                ns.print(`Hack Lvl {${myHckLvl}} < Required Hack Lvl {${srvhckLvl}}`)
-            }
-        } else { ns.print(`${server.toUpperCase()} is not a valid target!`); }
     })
 
-    ns.run("srvCallRunner.js");
+    q.map(server => {
+        var srvhckLvl = ns.getServerRequiredHackingLevel(server);
+        var myHckLvl = ns.getHackingLevel();
+        if (myHckLvl >= srvhckLvl) {
+            if (source == "home") {
+                try {
+                    var threads = Math.floor(ns.getServerMaxRam(server) / 4);
+                    ns.run("hckthat.js", threads, server);
+                    ns.print(`\nRunning "hckthat.js" targeting [${server.toUpperCase()}] with ${threads} threads!`)
+                } catch {
+                    ns.print(`\nSetting threads to 1 for [${server.toUpperCase()}]!`);
+                    ns.run("hckthat.js", 1, server);
+                    ns.print(`Running "hckthat.js" targeting [${server.toUpperCase()}]!`)
+                }
+            } else {
+                ns.run("hckthat.js", 1, server);
+                ns.print(`\nRunning "hckthat.js" on [${source.toUpperCase()}] targeting [${server.toUpperCase()}]!`)
+            }
+        } else {
+            ns.print(`\nCan't run on [${server.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl(${srvhckLvl})!`)
+        }
+    })
+
+    if (!srvCall) {ns.run("srvCallRunner.js")} else (ns.print(`Skipping call for "srvCallRunner.js"!`))
 }

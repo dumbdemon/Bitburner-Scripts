@@ -1,5 +1,7 @@
 /** @param {import("..").NS } ns */
 export async function main(ns) {
+    ns.disableLog(`ALL`);
+
     let restartChk = ns.args[0];
     var notThese = [
         "home",
@@ -16,13 +18,15 @@ export async function main(ns) {
         }
     });
 
-    workingList.map(killIt => {
-        if (ns.hasRootAccess(killIt) && (ns.getServerMaxRam(killIt) % 4 == 0)) {
-            ns.kill("hckthat.js", "home", killIt);
+    workingList.map(mkeDead => {
+        if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 4 == 0)) {
+            ns.kill("hckthat.js", "home", mkeDead);
+            ns.print(`Killing "hckthat.js" with args [${mkeDead}]!`);
         }
     });
 
-    if (typeof restartChk != null) {
-        ns.run("runner.js");
+    if (restartChk == null) {
+        ns.run("runner.js", 1, "null");
+        ns.print(`Restarting "hckthat.js" scripts!`)
     } else ns.print("Args is empty, skipping restart!");
 }

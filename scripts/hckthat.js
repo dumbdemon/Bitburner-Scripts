@@ -4,6 +4,12 @@ export async function main(ns) {
 	var target = ns.args[0];
 	var mnyThresh = ns.getServerMaxMoney(target) * 0.75;
 	var secThresh = ns.getServerMinSecurityLevel(target) + 5;
+
+    ns.disableLog(`ALL`);
+	ns.enableLog(`weaken`);
+	ns.enableLog(`hack`);
+	ns.enableLog(`grow`);
+	
 	if (!ns.hasRootAccess(target)) {
 		try {
 			[
@@ -14,11 +20,11 @@ export async function main(ns) {
 				["SQLInject.exe", ns.sqlinject]
 			].filter(wares => ns.fileExists(wares[0])).map(exe => {
 				exe[1](target);
-				ns.print(`Deployed ${exe[0]} on ${target.toUpperCase()}!`)
+				ns.print(`\nDeployed ${exe[0]} on ${target.toUpperCase()}!`)
 			});
 			ns.nuke(target);
 		} catch {
-			ns.print(`Not enough ports for ${target.toUpperCase()}!`);
+			ns.print(`\nNot enough ports for ${target.toUpperCase()}!`);
 			ns.exit();
 		}
 	}
