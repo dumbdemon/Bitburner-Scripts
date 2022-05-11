@@ -6,14 +6,13 @@ export async function main(ns) {
 
     var notThese = [
         "home",
-        "CSEC",
         "darkweb"
     ]
     ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
     var source = ns.args[0];
     let srvCall;
     if (!source || source == "null") {
-        if (source == "null") {srvCall = 1}
+        if (source == "null") { srvCall = 1 }
         source = "home";
     }
     ns.print(`Started with source [${source.toUpperCase()}]!`);
@@ -22,7 +21,7 @@ export async function main(ns) {
     Array(30).fill().map(y => tq = [...new Set(tq.map(s => [s, ns.scan(s)]).flat(2))]);
     tq.map(serv => {
         let chk = notThese.filter(server => server == serv);
-        if (chk.length == 0){
+        if (chk.length == 0) {
             if (source == "home") {
                 q.push(serv);
             } else {
@@ -39,7 +38,7 @@ export async function main(ns) {
         if (myHckLvl >= srvhckLvl) {
             if (source == "home") {
                 try {
-                    var threads = Math.floor(ns.getServerMaxRam(server) / 4);
+                    var threads = Math.floor(ns.getServerMaxRam(server) / 2);
                     ns.run("hckthat.js", threads, server);
                     ns.print(`\nRunning "hckthat.js" targeting [${server.toUpperCase()}] with ${threads} threads!`)
                 } catch {
@@ -56,5 +55,5 @@ export async function main(ns) {
         }
     })
 
-    if (!srvCall) {ns.run("srvCallRunner.js")} else (ns.print(`Skipping call for "srvCallRunner.js"!`))
+    if (!srvCall) { ns.run("srvCallRunner.js") } else (ns.print(`Skipping call for "srvCallRunner.js"!`))
 }

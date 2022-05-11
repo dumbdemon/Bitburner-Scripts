@@ -2,10 +2,8 @@
 export async function main(ns) {
     ns.disableLog(`ALL`);
 
-    let restartChk = ns.args[0];
     var notThese = [
         "home",
-        "CSEC",
         "darkweb"
     ]
     ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
@@ -18,14 +16,17 @@ export async function main(ns) {
         }
     });
 
+    let totalKilled = 0;
     workingList.map(mkeDead => {
-        if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 4 == 0)) {
+        if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 2 == 0)) {
             ns.kill("hckthat.js", "home", mkeDead);
             ns.print(`Killing "hckthat.js" with args [${mkeDead}]!`);
+            ++totalKilled;
         }
     });
+    ns.print(`Killed ${totalKilled} total scipts!`);
 
-    if (restartChk == null) {
+    if (ns.args[0] == null) {
         ns.run("runner.js", 1, "null");
         ns.print(`Restarting "hckthat.js" scripts!`)
     } else ns.print("Args is empty, skipping restart!");

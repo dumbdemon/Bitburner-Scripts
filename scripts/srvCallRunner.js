@@ -1,7 +1,7 @@
 /** @param {import("..").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
-    var notThese = ["home","CSEC","darkweb"];
+    var notThese = ["home","darkweb"];
     let testRecievers = ["home"];
     let recievers = [];
     Array(30).fill().map(y => testRecievers = [...new Set(testRecievers.map(s => [s, ns.scan(s)]).flat(2))]);
@@ -13,15 +13,14 @@ export async function main(ns) {
     });
 
     var i = 0;
-    ns.print(`I need ${ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home")}GB of RAM on target server!\nChecking if "runner.js" can run...`)
+    ns.print(`I need at least ${ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home")}GB of RAM on all targetable servers!\nChecking if "runner.js" can run...`)
 
     while(i < recievers.length) {
         let srvRAM = ns.getServerMaxRam(recievers[i]);
         let trgt = recievers[i];
         let scanRad = [trgt];
 
-
-        if (ns.hasRootAccess(trgt)) {
+        if (ns.hasRootAccess(trgt)) {W
             if (srvRAM > (ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home"))) {
                 Array(30).fill().map(y => scanRad = [...new Set(scanRad.map(s => [s, ns.scan(s)]).flat(2))]);
                 ns.print(`..Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)

@@ -5,11 +5,11 @@ export async function main(ns) {
 	var mnyThresh = ns.getServerMaxMoney(target) * 0.75;
 	var secThresh = ns.getServerMinSecurityLevel(target) + 5;
 
-    ns.disableLog(`ALL`);
+	ns.disableLog(`ALL`);
 	ns.enableLog(`weaken`);
 	ns.enableLog(`hack`);
 	ns.enableLog(`grow`);
-	
+
 	if (!ns.hasRootAccess(target)) {
 		try {
 			[
@@ -18,10 +18,12 @@ export async function main(ns) {
 				["HTTPWorm.exe", ns.httpworm],
 				["relaySMTP.exe", ns.relaysmtp],
 				["SQLInject.exe", ns.sqlinject]
-			].filter(wares => ns.fileExists(wares[0])).map(exe => {
-				exe[1](target);
-				ns.print(`\nDeployed ${exe[0]} on ${target.toUpperCase()}!`)
-			});
+			].map(exe => {
+				if (ns.fileExists(exe[0])) {
+					exe[1](target);
+					ns.print(`\nDeployed ${exe[0]} on ${target.toUpperCase()}!`)
+				}
+			})
 			ns.nuke(target);
 		} catch {
 			ns.print(`\nNot enough ports for ${target.toUpperCase()}!`);
