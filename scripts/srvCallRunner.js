@@ -20,7 +20,7 @@ export async function main(ns) {
         let trgt = recievers[i];
         let scanRad = [trgt];
 
-        if (ns.hasRootAccess(trgt)) {W
+        if (ns.hasRootAccess(trgt)) {
             if (srvRAM > (ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home"))) {
                 Array(30).fill().map(y => scanRad = [...new Set(scanRad.map(s => [s, ns.scan(s)]).flat(2))]);
                 ns.print(`..Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
