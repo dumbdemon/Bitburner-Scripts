@@ -21,7 +21,7 @@ export async function main(ns) {
 			].map(exe => {
 				if (ns.fileExists(exe[0])) {
 					exe[1](target);
-					ns.print(`\nDeployed ${exe[0]} on ${target.toUpperCase()}!`)
+					ns.print(`Deployed ${exe[0]} on ${target.toUpperCase()}!`)
 				}
 			})
 			ns.nuke(target);

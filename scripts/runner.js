@@ -2,7 +2,6 @@
 
 export async function main(ns) {
     ns.disableLog(`ALL`);
-    ns.print("");
 
     var notThese = [
         "home",
@@ -30,7 +29,7 @@ export async function main(ns) {
                 }
             }
         }
-    })
+    });
 
     q.map(server => {
         var srvhckLvl = ns.getServerRequiredHackingLevel(server);
@@ -51,7 +50,7 @@ export async function main(ns) {
                 ns.print(`\nRunning "hckthat.js" on [${source.toUpperCase()}] targeting [${server.toUpperCase()}]!`)
             }
         } else {
-            ns.print(`\nCan't run on [${server.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl(${srvhckLvl})!`)
+            ns.print(`\nCan't run on [${server.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl (${srvhckLvl})!`)
         }
     })
 

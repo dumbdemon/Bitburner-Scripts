@@ -29,5 +29,5 @@ export async function main(ns) {
     if (ns.args[0] == null) {
         ns.run("runner.js", 1, "null");
         ns.print(`Restarting "hckthat.js" scripts!`)
-    } else ns.print("Args is empty, skipping restart!");
+    } else ns.print("Skipping restart!");
 }

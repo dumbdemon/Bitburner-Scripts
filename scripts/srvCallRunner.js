@@ -13,15 +13,16 @@ export async function main(ns) {
     });
 
     var i = 0;
-    ns.print(`I need at least ${ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home")}GB of RAM on all targetable servers!\nChecking if "runner.js" can run...`)
+    var ramMIN = ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home");
+    ns.print(`I need at least ${ramMIN}GB of RAM on all targetable servers!\nChecking if "runner.js" can run...`)
 
     while(i < recievers.length) {
-        let srvRAM = ns.getServerMaxRam(recievers[i]);
         let trgt = recievers[i];
+        let srvRAM = ns.getServerMaxRam(trgt);
         let scanRad = [trgt];
 
         if (ns.hasRootAccess(trgt)) {
-            if (srvRAM > (ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home"))) {
+            if (srvRAM > ramMIN) {
                 Array(30).fill().map(y => scanRad = [...new Set(scanRad.map(s => [s, ns.scan(s)]).flat(2))]);
                 ns.print(`..Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
                 scanRad.map(srv => {
