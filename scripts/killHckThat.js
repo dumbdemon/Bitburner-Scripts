@@ -8,20 +8,20 @@ export async function main(ns) {
     let q = ["home"];
     let workingList = [];
     Array(30).fill().map(y => q = [...new Set(q.map(s => [s, ns.scan(s)]).flat(2))]);
-    q.forEach(srv => {
+    for (let srv of q) {
         if (!notThese.includes(srv)) {
             workingList.push(srv);
         }
-    });
+    }
 
     let totalKilled = 0;
-    workingList.map(mkeDead => {
+    for (let mkeDead of workingList) {
         if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 2 == 0)) {
             ns.kill("hckthat.js", "home", mkeDead);
             ns.tprint(`Killing "hckthat.js" with args [${mkeDead}]!`);
             ++totalKilled;
         }
-    });
+    }
     ns.tprint(`Killed ${totalKilled} total scipts!`);
 
     if (ns.args[0] == null) {

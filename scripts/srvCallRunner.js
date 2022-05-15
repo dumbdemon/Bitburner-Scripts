@@ -5,12 +5,12 @@ export async function main(ns) {
     let testRecievers = ["home"];
     let recievers = [];
     Array(30).fill().map(y => testRecievers = [...new Set(testRecievers.map(s => [s, ns.scan(s)]).flat(2))]);
-    testRecievers.map(serv =>{
+    for (let serv of testRecievers) {
         let chk = notThese.filter(server => server == serv);
         if (chk.length == 0 && (ns.getServerMaxRam(serv) != 0)) {
             recievers.push(serv);
         }
-    });
+    }
 
     var i = 0;
     var ramMIN = ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home");
@@ -25,9 +25,9 @@ export async function main(ns) {
             if (srvRAM > ramMIN) {
                 Array(30).fill().map(y => scanRad = [...new Set(scanRad.map(s => [s, ns.scan(s)]).flat(2))]);
                 ns.print(`..Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
-                scanRad.map(srv => {
+                for (let srv of scanRad) {
                     ns.kill("hckthat.js", trgt, srv);
-                });
+                }
 
                 ns.rm("hckthat.js", trgt);
                 await ns.scp("hckthat.js", trgt);

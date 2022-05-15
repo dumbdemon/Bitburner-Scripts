@@ -1,9 +1,7 @@
 /** @param {import("../.").NS } ns */
 
 export async function main(ns) {
-    var argz;
-    if (ns.args.length != 0) { argz = `[${ns.args.toString()}]` } else { argz = "[]" }
-    ns.tprintf(`~~~~~${ns.getScriptName()} ${argz}~~~~~`);
+    ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     const whatDo = ns.args[0];
     var RAM = ns.args[1];
     if (RAM == null) { RAM = 8 }
@@ -34,7 +32,12 @@ export async function main(ns) {
             break;
         case "query":
             if (ns.getPurchasedServers().length == ns.getPurchasedServerLimit()) {
-                ns.tprintf(`You don't need anymore servers!`)
+                ns.tprintf(`You don't need anymore servers!`);
+                if (isFinite(reqMny)) {
+                    ns.tprintf(`However, you will need $${(25 * ns.getPurchasedServerCost(RAM)).toLocaleString('en-US')} to buy 25 servers with ${RAM}GB of RAM.`);
+                } else {
+                    ns.tprintf(`However, the RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
+                }
             } else if (isFinite(reqMny)) {
                 ns.tprintf(`You will need $${reqMny.toLocaleString('en-US')} to buy ${srvrAmt} servers with ${RAM}GB of RAM.`);
             } else {

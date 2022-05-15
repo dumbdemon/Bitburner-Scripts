@@ -18,7 +18,7 @@ export async function main(ns) {
     let tq = [source];
     let q = [];
     Array(30).fill().map(y => tq = [...new Set(tq.map(s => [s, ns.scan(s)]).flat(2))]);
-    tq.map(serv => {
+    for (let serv of tq) {
         let chk = notThese.filter(server => server == serv);
         if (chk.length == 0) {
             if (source == "home") {
@@ -29,9 +29,9 @@ export async function main(ns) {
                 }
             }
         }
-    });
+    }
 
-    q.map(server => {
+    for (let server of q) {
         var srvhckLvl = ns.getServerRequiredHackingLevel(server);
         var myHckLvl = ns.getHackingLevel();
         if (myHckLvl >= srvhckLvl) {
@@ -52,7 +52,7 @@ export async function main(ns) {
         } else {
             ns.print(`\nCan't run "hckthat.js" targeting [${server.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl (${srvhckLvl})!`)
         }
-    })
+    }
 
     if (!srvCall) { ns.run("srvCallRunner.js") } else (ns.print(`Skipping call for "srvCallRunner.js"!`))
 }
