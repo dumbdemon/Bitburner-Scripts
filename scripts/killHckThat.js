@@ -1,7 +1,5 @@
 /** @param {import("..").NS } ns */
 export async function main(ns) {
-    ns.disableLog(`ALL`);
-
     var notThese = [
         "home",
         "darkweb"
@@ -20,14 +18,14 @@ export async function main(ns) {
     workingList.map(mkeDead => {
         if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 2 == 0)) {
             ns.kill("hckthat.js", "home", mkeDead);
-            ns.print(`Killing "hckthat.js" with args [${mkeDead}]!`);
+            ns.tprint(`Killing "hckthat.js" with args [${mkeDead}]!`);
             ++totalKilled;
         }
     });
-    ns.print(`Killed ${totalKilled} total scipts!`);
+    ns.tprint(`Killed ${totalKilled} total scipts!`);
 
     if (ns.args[0] == null) {
         ns.run("runner.js", 1, "null");
-        ns.print(`Restarting "hckthat.js" scripts!`)
-    } else ns.print("Skipping restart!");
+        ns.tprint(`Restarting "hckthat.js" scripts!`)
+    } else ns.tprint("Skipping restart!");
 }
