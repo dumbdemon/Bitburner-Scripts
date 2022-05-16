@@ -1,14 +1,14 @@
 /** @param {import("../.").NS } ns */
 
 export async function main(ns) {
-	var target = ns.args[0];
-	var mnyThresh = ns.getServerMaxMoney(target) * 0.75;
-	var secThresh = ns.getServerMinSecurityLevel(target) + 5;
-
 	ns.disableLog(`ALL`);
 	ns.enableLog(`weaken`);
 	ns.enableLog(`hack`);
 	ns.enableLog(`grow`);
+	
+	var target = ns.args[0];
+	var mnyThresh = ns.getServerMaxMoney(target) * 0.75;
+	var secThresh = ns.getServerMinSecurityLevel(target) + 5;
 
 	if (!ns.hasRootAccess(target)) {
 		try {

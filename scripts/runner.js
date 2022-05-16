@@ -19,8 +19,7 @@ export async function main(ns) {
     let q = [];
     Array(30).fill().map(y => tq = [...new Set(tq.map(s => [s, ns.scan(s)]).flat(2))]);
     for (let serv of tq) {
-        let chk = notThese.filter(server => server == serv);
-        if (chk.length == 0) {
+        if (!notThese.includes(serv)) {
             if (source == "home") {
                 q.push(serv);
             } else {

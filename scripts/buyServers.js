@@ -47,5 +47,4 @@ export async function main(ns) {
         default:
             ns.tprintf(`Type \`run buyServers.js buy <RAM>\` to buy servers, or type \`run buyServers.js query <RAM>\` to get an estimate.\nIf no RAM is passed, the script will assume 8GB of RAM.`);
     }
-    
 }

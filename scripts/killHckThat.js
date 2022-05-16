@@ -1,5 +1,6 @@
 /** @param {import("..").NS } ns */
 export async function main(ns) {
+    ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     var notThese = [
         "home",
         "darkweb"
@@ -18,14 +19,14 @@ export async function main(ns) {
     for (let mkeDead of workingList) {
         if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 2 == 0)) {
             ns.kill("hckthat.js", "home", mkeDead);
-            ns.tprint(`Killing "hckthat.js" with args [${mkeDead}]!`);
+            ns.tprintf(`Killing "hckthat.js" with args [${mkeDead}]!`);
             ++totalKilled;
         }
     }
-    ns.tprint(`Killed ${totalKilled} total scipts!`);
+    ns.tprintf(`Killed ${totalKilled} total scipts!`);
 
     if (ns.args[0] == null) {
         ns.run("runner.js", 1, "null");
-        ns.tprint(`Restarting "hckthat.js" scripts!`)
-    } else ns.tprint("Skipping restart!");
+        ns.tprintf(`Restarting "hckthat.js" scripts!`)
+    } else ns.tprintf("Skipping restart!");
 }
