@@ -34,7 +34,7 @@ export async function main(ns) {
         var srvhckLvl = ns.getServerRequiredHackingLevel(server);
         var myHckLvl = ns.getHackingLevel();
         if (myHckLvl >= srvhckLvl) {
-            if (source == "home") {
+            if (source == "home" || (source.startsWith("bitch") && ns.getServerMaxRam(server) > 1850)) {
                 try {
                     var threads = Math.floor(ns.getServerMaxRam(server) / 2);
                     ns.run("hckthat.js", threads, server);

@@ -6,8 +6,7 @@ export async function main(ns) {
     let recievers = [];
     Array(30).fill().map(y => testRecievers = [...new Set(testRecievers.map(s => [s, ns.scan(s)]).flat(2))]);
     for (let serv of testRecievers) {
-        let chk = notThese.filter(server => server == serv);
-        if (chk.length == 0 && (ns.getServerMaxRam(serv) != 0)) {
+        if (!notThese.includes(serv) && ns.getServerMaxRam(serv) != 0) {
             recievers.push(serv);
         }
     }
@@ -24,7 +23,7 @@ export async function main(ns) {
         if (ns.hasRootAccess(trgt)) {
             if (srvRAM > ramMIN) {
                 Array(30).fill().map(y => scanRad = [...new Set(scanRad.map(s => [s, ns.scan(s)]).flat(2))]);
-                ns.print(`..Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
+                ns.print(`Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
                 for (let srv of scanRad) {
                     ns.kill("hckthat.js", trgt, srv);
                 }
@@ -35,11 +34,11 @@ export async function main(ns) {
                 await ns.scp("runner.js", trgt);
     
                 ns.exec("runner.js", trgt, 1, trgt);
-                ns.print(`.."runner.js" has started on [${trgt.toUpperCase()}]!`);
+                ns.print(`> "runner.js" has started on [${trgt.toUpperCase()}]!`);
             } else {
-                ns.print(`..Unable to run on [${trgt.toUpperCase()}]!\n..Not enough RAM!`)
+                ns.print(`> Unable to run on [${trgt.toUpperCase()}]!\n> Not enough RAM!`)
             }
-        } else ns.print(`.No root access on [${trgt.toUpperCase()}]!`)
+        } else ns.print(`No root access on [${trgt.toUpperCase()}]!`)
         ++i;
     }
 }
