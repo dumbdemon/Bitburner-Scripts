@@ -8,25 +8,26 @@ export async function main(ns) {
     var whatDo = ns.args;
     var caller = whatDo[0];
     var calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
+    var rpeTxt = "This does nothing for now!";
 
     switch (caller) {
         case "query":
-            ns.tprintf(`[query] \u00bb This does nothing for now!`)
+            ns.tprintf(`[query] `)
             break;
         case "buy":
-            ns.tprintf(`[buy] \u00bb This does nothing for now!`)
+            ns.tprintf(`[buy] \u00bb ${rpeTxt}`)
             break;
         case "buyMax":
-            ns.tprintf(`[buyMax] \u00bb This does nothing for now!`)
+            ns.tprintf(`[buyMax] \u00bb ${rpeTxt}`)
             break;
         case "sell":
-            ns.tprintf(`[sell] \u00bb This does nothing for now!`)
+            ns.tprintf(`[sell] \u00bb ${rpeTxt}`)
             break;
         case "sellMax":
-            ns.tprintf(`[sellMax] \u00bb This does nothing for now!`)
+            ns.tprintf(`[sellMax] \u00bb ${rpeTxt}`)
             break;
         case "sellAll":
-            ns.tprintf(`[sellAll] \u00bb This does nothing for now!`)
+            ns.tprintf(`[sellAll] \u00bb ${rpeTxt}`)
             break;
         default:
             let what2say = "A script to buy stocks!";
