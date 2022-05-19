@@ -12,7 +12,7 @@ export async function main(ns) {
 
     switch (caller) {
         case "query":
-            ns.tprintf(`[query] `)
+            ns.tprintf(`[query] \u00bb ${rpeTxt}`)
             break;
         case "buy":
             ns.tprintf(`[buy] \u00bb ${rpeTxt}`)
