@@ -34,20 +34,22 @@ export async function main(ns) {
         var srvhckLvl = ns.getServerRequiredHackingLevel(server);
         var myHckLvl = ns.getHackingLevel();
         if (myHckLvl >= srvhckLvl) {
-            if (source == "home" || (source.startsWith("bitch") && ns.getServerMaxRam(server) > 1850)) {
-                try {
-                    var threads = Math.floor(ns.getServerMaxRam(server) / 2);
-                    ns.run("hckthat.js", threads, server);
-                    ns.print(`\nRunning "hckthat.js" targeting [${server.toUpperCase()}] with ${threads} threads!`)
-                } catch {
-                    ns.print(`\nSetting threads to 1 for [${server.toUpperCase()}]!`);
+            if (!ns.getRunningScript("hckthat.js", source, server)) {
+                if (source == "home" || source.startsWith("bitch")) {
+                    try {
+                        var threads = Math.floor(ns.getServerMaxRam(server) / 2);
+                        ns.run("hckthat.js", threads, server);
+                        ns.print(`\nRunning "hckthat.js" targeting [${server.toUpperCase()}] with ${threads} threads!`)
+                    } catch {
+                        ns.print(`\nSetting threads to 1 for [${server.toUpperCase()}]!`);
+                        ns.run("hckthat.js", 1, server);
+                        ns.print(`Running "hckthat.js" targeting [${server.toUpperCase()}]!`)
+                    }
+                } else {
                     ns.run("hckthat.js", 1, server);
-                    ns.print(`Running "hckthat.js" targeting [${server.toUpperCase()}]!`)
+                    ns.print(`\nRunning "hckthat.js" on [${source.toUpperCase()}] targeting [${server.toUpperCase()}]!`)
                 }
-            } else {
-                ns.run("hckthat.js", 1, server);
-                ns.print(`\nRunning "hckthat.js" on [${source.toUpperCase()}] targeting [${server.toUpperCase()}]!`)
-            }
+            } else ns.print(`\n"hckthat.js" is already targeting [${server.toUpperCase()}] on [${source.toUpperCase()}]!`)
         } else {
             ns.print(`\nCan't run "hckthat.js" targeting [${server.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl (${srvhckLvl})!`)
         }

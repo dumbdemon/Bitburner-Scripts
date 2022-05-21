@@ -7,6 +7,7 @@ export async function main(ns) {
     if (RAM == null) { RAM = 8 }
     var srvrAmt = ns.getPurchasedServerLimit() - ns.getPurchasedServers().length;
     var reqMny = srvrAmt * ns.getPurchasedServerCost(RAM);
+    var queryMny = ns.getPurchasedServerLimit() * ns.getPurchasedServerCost(RAM);
     
     switch (whatDo) {
         case "buy":
@@ -28,18 +29,18 @@ export async function main(ns) {
                 ++i;
                 reqMny -= ns.getPurchasedServerCost(RAM);
             }
-            if (reqMny > 0) { ns.tprintf(`You need at least $${reqMny} more to get ${buySrvr} more server(s)!`)}
+            if (reqMny > 0) { ns.tprintf(`You need at least $${getPrettyMoney(ns, reqMny)} more to get ${buySrvr} more server(s)!`)}
             break;
         case "query":
             if (ns.getPurchasedServers().length == ns.getPurchasedServerLimit()) {
                 ns.tprintf(`You don't need anymore servers!`);
-                if (isFinite(reqMny)) {
-                    ns.tprintf(`However, you will need $${(25 * ns.getPurchasedServerCost(RAM)).toLocaleString('en-US')} to buy 25 servers with ${RAM}GB of RAM.`);
+                if (isFinite(queryMny)) {
+                    ns.tprintf(`However, you will need $${getPrettyMoney(ns, queryMny)} to buy ${ns.getPurchasedServerLimit()} servers with ${RAM}GB of RAM.`);
                 } else {
                     ns.tprintf(`However, the RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
                 }
             } else if (isFinite(reqMny)) {
-                ns.tprintf(`You will need $${reqMny.toLocaleString('en-US')} to buy ${srvrAmt} servers with ${RAM}GB of RAM.`);
+                ns.tprintf(`You will need $${getPrettyMoney(ns, queryMny)} to buy ${ns.getPurchasedServerLimit()} servers with ${RAM}GB of RAM.`);
             } else {
                 ns.tprintf(`The RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
             }
@@ -47,4 +48,21 @@ export async function main(ns) {
         default:
             ns.tprintf(`Type \`run buyServers.js buy <RAM>\` to buy servers, or type \`run buyServers.js query <RAM>\` to get an estimate.\nIf no RAM is passed, the script will assume 8GB of RAM.`);
     }
+}
+
+/** 
+ * @param {import("../.").NS} ns
+ * @param {Number} money
+ * @returns Returns the money as shown in the game.
+ */
+async function getPrettyMoney(ns, money) {
+    var prttyMny = ["", "k", "m", "b", "t", "q", "s"];
+    let value = money;
+    if (!value) { return ns.printf(`ERROR: No money passed.`) }
+    let i = 0;
+    while (value > 999) {
+        value = value / 1000;
+        ++i;
+    }
+    return `$${value + prttyMny[i]}`;
 }

@@ -1,4 +1,6 @@
 /** @param {import("../.").NS } ns */
+var rpeTxt = "This does nothing for now!";
+
 export async function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     ns.disableLog(`ALL`);
@@ -8,26 +10,25 @@ export async function main(ns) {
     var whatDo = ns.args;
     var caller = whatDo[0];
     var calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
-    var rpeTxt = "This does nothing for now!";
 
     switch (caller) {
         case "query":
-            ns.tprintf(`[query] \u00bb ${rpeTxt}`)
+            query(ns);
             break;
         case "buy":
-            ns.tprintf(`[buy] \u00bb ${rpeTxt}`)
+            buy(ns);
             break;
         case "buyMax":
-            ns.tprintf(`[buyMax] \u00bb ${rpeTxt}`)
+            buyMax(ns);
             break;
         case "sell":
-            ns.tprintf(`[sell] \u00bb ${rpeTxt}`)
+            sell(ns);
             break;
         case "sellMax":
-            ns.tprintf(`[sellMax] \u00bb ${rpeTxt}`)
+            sellMax(ns);
             break;
         case "sellAll":
-            ns.tprintf(`[sellAll] \u00bb ${rpeTxt}`)
+            sellAll(ns);
             break;
         default:
             let what2say = "A script to buy stocks!";
@@ -40,4 +41,34 @@ export async function main(ns) {
             `\nsellMax <stock>` +
             `\nsellAll`);
     }
+}
+
+/** @param {import("../.").NS } ns */
+async function query(ns) {
+    return ns.tprintf(`[query] \u00bb ${rpeTxt}`)
+}
+
+/** @param {import("../.").NS } ns */
+async function buy(ns) {
+    return ns.tprintf(`[buy] \u00bb ${rpeTxt}`)
+}
+
+/** @param {import("../.").NS } ns */
+async function buyMax(ns) {
+    return ns.tprintf(`[buyMax] \u00bb ${rpeTxt}`)
+}
+
+/** @param {import("../.").NS } ns */
+async function sell(ns) {
+    return ns.tprintf(`[sell] \u00bb ${rpeTxt}`)
+}
+
+/** @param {import("../.").NS } ns */
+async function sellAll(ns) {
+    return ns.tprintf(`[sellAll] \u00bb ${rpeTxt}`)
+}
+
+/** @param {import("../.").NS } ns */
+async function sellMax(ns) {
+    return ns.tprintf(`[sellMax] \u00bb ${rpeTxt}`)
 }
