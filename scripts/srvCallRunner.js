@@ -1,10 +1,11 @@
+import { getConnectedServers } from "./common";
+
 /** @param {import("..").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
     var notThese = ["home","darkweb"];
-    let testRecievers = ["home"];
+    let testRecievers = getConnectedServers(ns, ["home"]);
     let recievers = [];
-    Array(30).fill().map(y => testRecievers = [...new Set(testRecievers.map(s => [s, ns.scan(s)]).flat(2))]);
     for (let serv of testRecievers) {
         if (!notThese.includes(serv) && ns.getServerMaxRam(serv) != 0) {
             recievers.push(serv);
@@ -15,17 +16,16 @@ export async function main(ns) {
     ns.print(`I need at least ${ramMIN}GB of RAM on all targetable servers!\nChecking if "runner.js" can run...`)
 
     for (let trgt of recievers) {
-        let srvRAM = ns.getServerMaxRam(trgt);
-        let scanRad = [trgt];
-
         if (ns.hasRootAccess(trgt)) {
-            if (srvRAM > ramMIN) {
-                Array(30).fill().map(y => scanRad = [...new Set(scanRad.map(s => [s, ns.scan(s)]).flat(2))]);
+            if (ns.getServerMaxRam(trgt) > ramMIN) {
+                let scanRad = getConnectedServers(ns, [trgt]);
                 ns.print(`Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
                 for (let srv of scanRad) {
                     ns.kill("hckthat.js", trgt, srv);
                 }
 
+                ns.rm("common.js", trgt);
+                await ns.scp("common.js", trgt);
                 ns.rm("hckthat.js", trgt);
                 await ns.scp("hckthat.js", trgt);
                 ns.rm("runner.js", trgt);

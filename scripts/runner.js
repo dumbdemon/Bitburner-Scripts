@@ -1,5 +1,6 @@
-/** @param {import("../.").NS } ns */
+import { getConnectedServers } from "./common";
 
+/** @param {import("../.").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
 
@@ -15,9 +16,8 @@ export async function main(ns) {
         source = "home";
     }
     ns.print(`Started with source [${source.toUpperCase()}]!`);
-    let tq = [source];
+    let tq = getConnectedServers(ns, [source]);
     let q = [];
-    Array(30).fill().map(y => tq = [...new Set(tq.map(s => [s, ns.scan(s)]).flat(2))]);
     for (let serv of tq) {
         if (!notThese.includes(serv)) {
             if (source == "home") {

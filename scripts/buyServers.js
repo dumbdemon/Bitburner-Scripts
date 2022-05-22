@@ -1,5 +1,6 @@
-/** @param {import("../.").NS } ns */
+import { getPrettyNumber } from "./common";
 
+/** @param {import("../.").NS } ns */
 export async function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     const whatDo = ns.args[0];
@@ -29,18 +30,18 @@ export async function main(ns) {
                 ++i;
                 reqMny -= ns.getPurchasedServerCost(RAM);
             }
-            if (reqMny > 0) { ns.tprintf(`You need at least $${getPrettyNumber(ns, reqMny)} more to get ${buySrvr} more server(s)!`)}
+            if (reqMny > 0) { ns.tprintf(`You need at least $${getPrettyNumber(ns, reqMny, 3)} more to get ${buySrvr} more server(s)!`)}
             break;
         case "query":
             if (ns.getPurchasedServers().length == ns.getPurchasedServerLimit()) {
                 ns.tprintf(`You don't need anymore servers!`);
                 if (isFinite(queryMny)) {
-                    ns.tprintf(`However, you will need $${getPrettyNumber(ns, queryMny)} to buy ${ns.getPurchasedServerLimit()} servers with ${RAM}GB of RAM.`);
+                    ns.tprintf(`However, you will need $${getPrettyNumber(ns, queryMny, 3)} to buy ${ns.getPurchasedServerLimit()} servers with ${RAM}GB of RAM.`);
                 } else {
                     ns.tprintf(`However, the RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
                 }
             } else if (isFinite(reqMny)) {
-                ns.tprintf(`You will need $${getPrettyNumber(ns, queryMny)} to buy ${ns.getPurchasedServerLimit()} servers with ${RAM}GB of RAM.`);
+                ns.tprintf(`You will need $${getPrettyNumber(ns, queryMny, 3)} to buy ${ns.getPurchasedServerLimit()} servers with ${RAM}GB of RAM.`);
             } else {
                 ns.tprintf(`The RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
             }
@@ -48,21 +49,4 @@ export async function main(ns) {
         default:
             ns.tprintf(`Type \`run buyServers.js buy <RAM>\` to buy servers, or type \`run buyServers.js query <RAM>\` to get an estimate.\nIf no RAM is passed, the script will assume 8GB of RAM.`);
     }
-}
-
-/** 
- * @param {import("../.").NS} ns
- * @param {Number} num
- * @returns Returns numbers as shown in the game.
- */
-function getPrettyNumber(ns, num) {
-    var prttyNum = ["", "k", "m", "b", "t", "q", "s"];
-    let value = num;
-    if (!value) { return ns.printf(`ERROR: No number passed.`) }
-    let i = 0;
-    while (value > 999) {
-        value = value / 1000;
-        ++i;
-    }
-    return `${value + prttyNum[i]}`;
 }

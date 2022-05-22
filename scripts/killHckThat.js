@@ -1,3 +1,5 @@
+import { getConnectedServers } from "./common";
+
 /** @param {import("..").NS } ns */
 export async function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
@@ -6,9 +8,8 @@ export async function main(ns) {
         "darkweb"
     ]
     ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
-    let q = ["home"];
+    let q = getConnectedServers(ns, ["home"]);
     let workingList = [];
-    Array(30).fill().map(y => q = [...new Set(q.map(s => [s, ns.scan(s)]).flat(2))]);
     for (let srv of q) {
         if (!notThese.includes(srv)) {
             workingList.push(srv);
