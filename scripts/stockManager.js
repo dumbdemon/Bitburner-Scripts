@@ -1,4 +1,4 @@
-import { getPrettyNumber as pNumber} from "./common";
+import * as ddFuncs from "./common";
 
 /** @param {import("../.").NS } ns */
 var rpeTxt = "This does nothing for now!";

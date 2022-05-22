@@ -1,14 +1,10 @@
-import { getConnectedServers } from "./common";
+import * as hlp from "./common";
 
 /** @param {import("../.").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
 
-    var notThese = [
-        "home",
-        "darkweb"
-    ]
-    ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
+    var notThese = hlp.notMySrvs(ns, true);
     var source = ns.args[0];
     let srvCall;
     if (!source || source == "null") {
@@ -17,7 +13,7 @@ export async function main(ns) {
     }
     ns.print(`Started with source [${source.toUpperCase()}]!`);
     let q = [];
-    for (let serv of getConnectedServers(ns, [source])) {
+    for (let serv of hlp.getConnectedServers(ns, source)) {
         if (!notThese.includes(serv)) {
             if (source == "home") {
                 q.push(serv);

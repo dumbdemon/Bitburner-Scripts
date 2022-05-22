@@ -1,15 +1,11 @@
-import { getConnectedServers } from "./common";
+import * as hlp from "./common";
 
 /** @param {import("..").NS } ns */
 export async function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
-    var notThese = [
-        "home",
-        "darkweb"
-    ]
-    ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
+    var notThese = hlp.notMySrvs(ns, true);
     let workingList = [];
-    for (let srv of getConnectedServers(ns, ["home"])) {
+    for (let srv of hlp.getConnectedServers(ns, "home")) {
         if (!notThese.includes(srv)) {
             workingList.push(srv);
         }

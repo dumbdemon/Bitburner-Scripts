@@ -1,12 +1,11 @@
-import { getConnectedServers } from "./common";
+import * as hlp from "./common";
 
 /** @param {import("..").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
-    var notThese = ["home","darkweb"];
     let recievers = [];
-    for (let serv of getConnectedServers(ns, ["home"])) {
-        if (!notThese.includes(serv) && ns.getServerMaxRam(serv) != 0) {
+    for (let serv of hlp.getConnectedServers(ns, "home")) {
+        if (!hlp.notMySrvs(ns, false).includes(serv) && ns.getServerMaxRam(serv) != 0) {
             recievers.push(serv);
         }
     }
@@ -18,7 +17,7 @@ export async function main(ns) {
         if (ns.hasRootAccess(trgt)) {
             if (ns.getServerMaxRam(trgt) > ramMIN) {
                 ns.print(`Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
-                for (let srv of getConnectedServers(ns, [trgt])) {
+                for (let srv of hlp.getConnectedServers(ns, trgt)) {
                     ns.kill("hckthat.js", trgt, srv);
                 }
 
