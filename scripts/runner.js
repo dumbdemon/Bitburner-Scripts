@@ -16,9 +16,8 @@ export async function main(ns) {
         source = "home";
     }
     ns.print(`Started with source [${source.toUpperCase()}]!`);
-    let tq = getConnectedServers(ns, [source]);
     let q = [];
-    for (let serv of tq) {
+    for (let serv of getConnectedServers(ns, [source])) {
         if (!notThese.includes(serv)) {
             if (source == "home") {
                 q.push(serv);

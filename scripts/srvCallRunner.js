@@ -4,9 +4,8 @@ import { getConnectedServers } from "./common";
 export async function main(ns) {
     ns.disableLog(`ALL`);
     var notThese = ["home","darkweb"];
-    let testRecievers = getConnectedServers(ns, ["home"]);
     let recievers = [];
-    for (let serv of testRecievers) {
+    for (let serv of getConnectedServers(ns, ["home"])) {
         if (!notThese.includes(serv) && ns.getServerMaxRam(serv) != 0) {
             recievers.push(serv);
         }
@@ -18,9 +17,8 @@ export async function main(ns) {
     for (let trgt of recievers) {
         if (ns.hasRootAccess(trgt)) {
             if (ns.getServerMaxRam(trgt) > ramMIN) {
-                let scanRad = getConnectedServers(ns, [trgt]);
                 ns.print(`Killing all scipts using "hckthat.js" on [${trgt.toUpperCase()}]!`)
-                for (let srv of scanRad) {
+                for (let srv of getConnectedServers(ns, [trgt])) {
                     ns.kill("hckthat.js", trgt, srv);
                 }
 

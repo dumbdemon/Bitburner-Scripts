@@ -8,9 +8,8 @@ export async function main(ns) {
         "darkweb"
     ]
     ns.getPurchasedServers().forEach(async (nopes) => notThese.push(nopes));
-    let q = getConnectedServers(ns, ["home"]);
     let workingList = [];
-    for (let srv of q) {
+    for (let srv of getConnectedServers(ns, ["home"])) {
         if (!notThese.includes(srv)) {
             workingList.push(srv);
         }
