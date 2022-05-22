@@ -29,7 +29,7 @@ export function getPrettyNumber(ns, uglyNum, decimal) {
 /**
  * Recursively scan for available connected servers.
  * @param { import("..").NS } ns
- * @param { String } hostname The hostname where the scanning where start.
+ * @param { String } hostname The hostname where the scanner will start.
  * @returns An array of servers.
  */
 export function getConnectedServers(ns, hostname) {
