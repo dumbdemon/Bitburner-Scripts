@@ -55,5 +55,8 @@ export async function main(ns) {
         }
     }
 
-    if (!srvCall) { ns.run("srvCallRunner.js") } else (ns.print(`Skipping call for "srvCallRunner.js"!`))
+    if (!srvCall && source == "home") {
+        ns.run("srvCallRunner.js");
+        ns.tail("srvCallRunner.js");
+    } else (ns.print(`Skipping call for "srvCallRunner.js"!`))
 }

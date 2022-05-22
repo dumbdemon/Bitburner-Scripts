@@ -11,12 +11,10 @@ export async function main(ns) {
         }
     }
 
-    var i = 0;
     var ramMIN = ns.getScriptRam("runner.js", "home") + ns.getScriptRam("hckthat.js", "home");
     ns.print(`I need at least ${ramMIN}GB of RAM on all targetable servers!\nChecking if "runner.js" can run...`)
 
-    while(i < recievers.length) {
-        let trgt = recievers[i];
+    for (let trgt of recievers) {
         let srvRAM = ns.getServerMaxRam(trgt);
         let scanRad = [trgt];
 
@@ -39,6 +37,5 @@ export async function main(ns) {
                 ns.print(`> Unable to run on [${trgt.toUpperCase()}]!\n> Not enough RAM!`)
             }
         } else ns.print(`No root access on [${trgt.toUpperCase()}]!`)
-        ++i;
     }
 }

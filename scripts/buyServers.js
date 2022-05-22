@@ -55,7 +55,7 @@ export async function main(ns) {
  * @param {Number} num
  * @returns Returns numbers as shown in the game.
  */
-async function getPrettyNumber(ns, num) {
+function getPrettyNumber(ns, num) {
     var prttyNum = ["", "k", "m", "b", "t", "q", "s"];
     let value = num;
     if (!value) { return ns.printf(`ERROR: No number passed.`) }

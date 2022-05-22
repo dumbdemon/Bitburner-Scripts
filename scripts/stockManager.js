@@ -44,31 +44,31 @@ export async function main(ns) {
 }
 
 /** @param {import("../.").NS } ns */
-async function query(ns) {
+function query(ns) {
     return ns.tprintf(`[query] \u00bb ${rpeTxt}`)
 }
 
 /** @param {import("../.").NS } ns */
-async function buy(ns) {
+function buy(ns) {
     return ns.tprintf(`[buy] \u00bb ${rpeTxt}`)
 }
 
 /** @param {import("../.").NS } ns */
-async function buyMax(ns) {
+function buyMax(ns) {
     return ns.tprintf(`[buyMax] \u00bb ${rpeTxt}`)
 }
 
 /** @param {import("../.").NS } ns */
-async function sell(ns) {
+function sell(ns) {
     return ns.tprintf(`[sell] \u00bb ${rpeTxt}`)
 }
 
 /** @param {import("../.").NS } ns */
-async function sellAll(ns) {
+function sellAll(ns) {
     return ns.tprintf(`[sellAll] \u00bb ${rpeTxt}`)
 }
 
 /** @param {import("../.").NS } ns */
-async function sellMax(ns) {
+function sellMax(ns) {
     return ns.tprintf(`[sellMax] \u00bb ${rpeTxt}`)
 }
