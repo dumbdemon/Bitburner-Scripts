@@ -13,8 +13,8 @@ export async function main(ns) {
  * @returns Returns numbers as shown in the game.
  */
 export function getPrettyNumber(ns, uglyNum, decimal) {
-    var i = 0, prttyNum = ["", "k", "m", "b", "t", "q", "s"];
-    if (!uglyNum) {
+    var i = 0, prttyNum = ["", "k", "m", "b", "t", "q", "Q", "s"];
+    if (!uglyNum && uglyNum != 0) {
         ns.printf(`ERROR: No number passed.`)
         return `???.???${prttyNum[Math.floor(Math.random()*prttyNum.length)]}`
     } else if (!decimal) { decimal = 0 }
