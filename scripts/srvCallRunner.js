@@ -17,15 +17,10 @@ export async function main(ns) {
         if (ns.hasRootAccess(trgt)) {
             if (ns.getServerMaxRam(trgt) > ramMIN) {
                 ns.print(`Killing all scipts using "${hlp.hacker}" on [${trgt.toUpperCase()}]!`)
-                for (let srv of hlp.getConnectedServers(ns, trgt)) {
-                    ns.kill(hlp.hacker, trgt, srv);
-                }
+                for (let srv of hlp.getConnectedServers(ns, trgt)) { ns.kill(hlp.hacker, trgt, srv) }
 
-                ns.rm(hlp.commons, trgt);
                 await ns.scp(hlp.commons, trgt);
-                ns.rm(hlp.hacker, trgt);
                 await ns.scp(hlp.hacker, trgt);
-                ns.rm(hlp.runner, trgt);
                 await ns.scp(hlp.runner, trgt);
     
                 ns.exec(hlp.runner, trgt, 1, trgt);

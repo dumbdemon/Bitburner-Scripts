@@ -4,7 +4,7 @@ import * as hlp from "./common";
 var rpeTxt = "This does nothing for now!";
 
 export async function main(ns) {
-    ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
+    ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     ns.disableLog(`ALL`);
 
     var stonks = ns.stock;

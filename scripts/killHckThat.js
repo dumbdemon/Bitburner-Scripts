@@ -2,7 +2,7 @@ import * as hlp from "./common";
 
 /** @param {import("..").NS } ns */
 export async function main(ns) {
-    ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
+    ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     var notThese = hlp.notMySrvs(ns, true);
     let workingList = [];
     for (let srv of hlp.getConnectedServers(ns, "home")) {
@@ -23,6 +23,7 @@ export async function main(ns) {
 
     if (ns.args[0] == null) {
         ns.run(hlp.runner, 1);
+        ns.tail(hlp.runner, "home")
         ns.tprintf(`Restarting "${hlp.hacker}" scripts!`)
     } else ns.tprintf("Skipping restart!");
 }

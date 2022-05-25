@@ -1,6 +1,6 @@
 import * as hlp from "./common";
 
-/** @param {import("../.").NS } ns */
+/** @param { import("../.").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
 
@@ -35,38 +35,33 @@ export async function main(ns) {
                 if (source == "home" || source.startsWith(hlp.buySrvName)) {
                     try {
                         var threads = Math.floor(ns.getServerMaxRam(trgt) / 2);
-                        if (freeRAM < (ns.getScriptRam(hlp.hacker, source) * threads)) {
-                            if (source != "home") { ns.exit() }
-                            ns.tprintf(`Unable to run anymore stripts!` +
-                            `\n Needed Free RAM :: ${ns.getScriptRam(hlp.hacker, source) * threads}GB` +
-                            `\nCurrent Free RAM :: ${hlp.getPrettyNumber(ns, freeRAM, 1)}GB` +
-                            `\nTerminating the script...`);
-                            ns.exit();
-                        }
-                        ns.run(hlp.hacker, threads, trgt);
-                        ns.print(`\nRunning "${hlp.hacker}" targeting [${trgt.toUpperCase()}] with ${threads} threads!`);
-                    } catch {
-                        if (freeRAM < ns.getScriptRam(hlp.hacker, source)) {
-                            ns.tprintf(`Unable to run anymore stripts on [${source.toUpperCase()}]!\nNeed at least ${ns.getScriptRam(hlp.hacker, source)}GB!\nTerminating the script...`);
-                            ns.exit();
-                        }
-                        ns.print(`\nSetting threads to 1 for [${trgt.toUpperCase()}]!`);
-                        ns.run(hlp.hacker, 1, trgt);
-                        ns.print(`Running "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!`)
+                        if (freeRAM > (ns.getScriptRam(hlp.hacker, source) * threads)) {
+                            ns.run(hlp.hacker, threads, trgt);
+                            ns.print(`\nRunning "${hlp.hacker}" targeting [${trgt.toUpperCase()}] with ${threads} threads!`);
+                        } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!` +
+                                `\nNot enough free RAM!` +
+                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source) * threads}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 1)}GB`);
+                } catch {
+                        if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
+                            ns.print(`\nSetting threads to 1 for [${trgt.toUpperCase()}]!`);
+                            ns.run(hlp.hacker, 1, trgt);
+                            ns.print(`Running "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!`)
+                        } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!` +
+                                `\nNot enough free RAM!` +
+                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source)}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 1)}GB`);
                     }
                 } else {
-                    if (freeRAM < ns.getScriptRam(hlp.hacker, source)) {
-                        ns.tprintf(`Unable to run anymore stripts on [${source.toUpperCase()}]!\nNeed at least ${ns.getScriptRam(hlp.hacker, source)}GB!\nTerminating the script...`);
-                        ns.exit();
-                    }
-                    ns.run(hlp.hacker, 1, trgt);
-                    ns.print(`\nRunning "${hlp.hacker}" on [${source.toUpperCase()}] targeting [${trgt.toUpperCase()}]!`)
+                    if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
+                        ns.run(hlp.hacker, 1, trgt);
+                        ns.print(`\nRunning "${hlp.hacker}" on [${source.toUpperCase()}] targeting [${trgt.toUpperCase()}]!`)
+                    } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!`);
                 }
             } else ns.print(`\n"${hlp.hacker}" is already targeting [${trgt.toUpperCase()}] on [${source.toUpperCase()}]!`);
         } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl (${srvhckLvl})!`);
     }
 
     if (source == "home") {
+        ns.print(`\nStarting "srvCallRunner.js"...`)
         ns.run("srvCallRunner.js");
         ns.tail("srvCallRunner.js");
     } else ns.print(`Skipping call for "srvCallRunner.js"!`);
