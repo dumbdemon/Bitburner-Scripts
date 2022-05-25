@@ -22,11 +22,11 @@ export async function main(ns) {
             }
             while (i < ns.getPurchasedServerLimit()) {
                 if (ns.getServerMoneyAvailable("home") > oneSrvCost) {
-                    var hostname = ns.purchaseServer("bitch-" + i, RAM);
-                    await ns.scp("common.js", hostname);
-                    await ns.scp("hckthat.js", hostname);
-                    await ns.scp("runner.js", hostname);
-                    ns.exec("runner.js", hostname);
+                    var hostname = ns.purchaseServer(`${hlp.buySrvName}-${i}`, RAM);
+                    await ns.scp(hlp.commons, hostname);
+                    await ns.scp(hlp.hacker, hostname);
+                    await ns.scp(hlp.runner, hostname);
+                    ns.exec(hlp.runner, hostname);
                 }
                 ++i;
                 reqMny -= oneSrvCost;

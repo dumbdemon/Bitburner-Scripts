@@ -5,6 +5,26 @@ export async function main(ns) {
     ns.tprintf(`This is a helper script containing commonaly used scripting.`);
 }
 
+/**
+ * String literal for the hacker script.
+ */
+export var hacker = "hckthat.js";
+
+/**
+ * String literal for the runner script
+ */
+export var runner = "runner.js";
+
+/**
+ * String literal for the common script
+ */
+export var commons = "common.js";
+
+/**
+ * String literal for the default name for buySevers.js
+ */
+export var buySrvName = "bitch";
+
 /** 
  * Returns numbers as shown in the game.
  * @param { import("..").NS } ns
@@ -17,8 +37,8 @@ export function getPrettyNumber(ns, uglyNum, decimal) {
     var i = 0, prttyNum = ["", "k", "m", "b", "t", "q", "Q", "s"];
     if (!uglyNum && uglyNum != 0) {
         ns.printf(`ERROR: No number passed.`)
-        return `???.???${prttyNum[Math.floor(Math.random()*prttyNum.length)]}`
-    } 
+        return `???.???${prttyNum[Math.floor(Math.random() * prttyNum.length)]}`;
+    }
     while (uglyNum > 999) {
         uglyNum = uglyNum / 1000;
         ++i;
@@ -45,10 +65,7 @@ export function getConnectedServers(ns, hostname) {
  */
 export function notMySrvs(ns, addMySrvrs) {
     let checker = addMySrvrs ?? false;
-    let notThese = [
-        "home",
-        "darweb"
-    ];
+    let notThese = ["home", "darweb"];
     if (checker) { notThese.concat(ns.getPurchasedServers()) }
     return notThese;
 }

@@ -14,15 +14,15 @@ export async function main(ns) {
     let totalKilled = 0;
     for (let mkeDead of workingList) {
         if (ns.hasRootAccess(mkeDead) && (ns.getServerMaxRam(mkeDead) % 2 == 0)) {
-            ns.kill("hckthat.js", "home", mkeDead);
-            ns.tprintf(`Killing "hckthat.js" with args [${mkeDead}]!`);
+            ns.kill(hlp.hacker, "home", mkeDead);
+            ns.tprintf(`Killing ${hlp.hacker} with args [${mkeDead}]!`);
             ++totalKilled;
         }
     }
     ns.tprintf(`Killed ${totalKilled} total scipts!`);
 
     if (ns.args[0] == null) {
-        ns.run("runner.js", 1, "null");
-        ns.tprintf(`Restarting "hckthat.js" scripts!`)
+        ns.run(hlp.runner, 1);
+        ns.tprintf(`Restarting "${hlp.hacker}" scripts!`)
     } else ns.tprintf("Skipping restart!");
 }
