@@ -33,7 +33,7 @@ export async function main(ns) {
             }
             if (reqMny > 0) {
                 if (ns.getPurchasedServers().length == 0) { ns.tprintf(`No servers purchased!\nYou need at least $${hlp.getPrettyNumber(ns, oneSrvCost, 3)} for one server.`) }
-                else ns.tprintf(`You need at least $${hlp.getPrettyNumber(ns, reqMny, 3)} more to get ${ns.getPurchasedServerLimit()-ns.getPurchasedServers().length} more server(s)!`);
+                else ns.tprintf(`You need at least $${hlp.getPrettyNumber(ns, reqMny, 3)} to get ${ns.getPurchasedServerLimit()-ns.getPurchasedServers().length} more server(s)!`);
             }
             break;
         case "query":
