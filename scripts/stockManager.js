@@ -1,4 +1,4 @@
-import * as ddFuncs from "./common";
+import * as hlp from "./common";
 
 /** @param {import("../.").NS } ns */
 var rpeTxt = "This does nothing for now!";

@@ -50,6 +50,10 @@ export async function main(ns) {
         }
     }
 
+    if (!ns.getRunningScript("watcher.js", "home")) {
+        ns.exec("watcher.js", "home");
+    }
+
     if (!srvCall && source == "home") {
         ns.run("srvCallRunner.js");
         ns.tail("srvCallRunner.js");

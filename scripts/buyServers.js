@@ -5,9 +5,10 @@ export async function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     const whatDo = ns.args[0];
     var RAM = ns.args[1] ?? 8;
-    var srvrAmt = ns.getPurchasedServerLimit() - ns.getPurchasedServers().length;
-    var reqMny = srvrAmt * ns.getPurchasedServerCost(RAM);
-    var queryMny = ns.getPurchasedServerLimit() * ns.getPurchasedServerCost(RAM);
+    var oneSrvCost = ns.getPurchasedServerCost(RAM);
+    var srvrAmt = ns.getPurchasedServerLimit() - ns.getPurchasedServers.length;
+    var reqMny = srvrAmt * oneSrvCost;
+    var queryMny = ns.getPurchasedServerLimit() * oneSrvCost;
     
     switch (whatDo) {
         case "buy":
@@ -20,7 +21,7 @@ export async function main(ns) {
                 ns.exit();
             }
             while (i < ns.getPurchasedServerLimit()) {
-                if (ns.getServerMoneyAvailable("home") > ns.getPurchasedServerCost(RAM)) {
+                if (ns.getServerMoneyAvailable("home") > oneSrvCost) {
                     var hostname = ns.purchaseServer("bitch-" + i, RAM);
                     await ns.scp("common.js", hostname);
                     await ns.scp("hckthat.js", hostname);
@@ -28,7 +29,7 @@ export async function main(ns) {
                     ns.exec("runner.js", hostname);
                 }
                 ++i;
-                reqMny -= ns.getPurchasedServerCost(RAM);
+                reqMny -= oneSrvCost;
             }
             if (reqMny > 0) { ns.tprintf(`You need at least $${hlp.getPrettyNumber(ns, reqMny, 3)} more to get ${buySrvr} more server(s)!`)}
             break;
