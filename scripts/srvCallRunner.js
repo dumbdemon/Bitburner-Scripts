@@ -5,13 +5,13 @@ export async function main(ns) {
     ns.disableLog(`ALL`);
     let recievers = [];
     for (let serv of hlp.getConnectedServers(ns, "home")) {
-        if (!hlp.notMySrvs(ns, false).includes(serv) && ns.getServerMaxRam(serv) != 0) {
+        if (ns.getServerMaxRam(serv) != 0) {
             recievers.push(serv);
         }
     }
 
     var ramMIN = ns.getScriptRam(hlp.runner, "home") + ns.getScriptRam(hlp.hacker, "home");
-    ns.print(`I need at least ${ramMIN}GB of RAM on all targetable servers!\nChecking if "${hlp.runner}" can run...`)
+    ns.print(`I need at least ${ramMIN}GB of RAM on all targetable servers! Checking if "${hlp.runner}" can run...`)
 
     for (let trgt of recievers) {
         if (ns.hasRootAccess(trgt)) {
@@ -24,9 +24,9 @@ export async function main(ns) {
                 await ns.scp(hlp.runner, trgt);
     
                 ns.exec(hlp.runner, trgt, 1, trgt);
-                ns.print(`> "${hlp.runner}" has started on [${trgt.toUpperCase()}]!`);
+                ns.print(`\u00bb "${hlp.runner}" has started on [${trgt.toUpperCase()}]!`);
             } else {
-                ns.print(`> Unable to run on [${trgt.toUpperCase()}]!\n> Not enough RAM!`)
+                ns.print(`Unable to run on [${trgt.toUpperCase()}]!\n\u00bb Not enough RAM!`)
             }
         } else ns.print(`No root access on [${trgt.toUpperCase()}]!`)
     }

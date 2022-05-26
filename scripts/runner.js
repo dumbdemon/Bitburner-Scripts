@@ -9,18 +9,15 @@ export async function main(ns) {
         ns.tprintf(`Running "watcher.js"!`)
     }
 
-    var notThese = hlp.notMySrvs(ns, true);
     var source = ns.args[0] ?? "home";
     ns.print(`Started with source [${source.toUpperCase()}]!`);
     let trgts = [];
-    for (let serv of hlp.getConnectedServers(ns, source)) {
-        if (!notThese.includes(serv)) {
-            if (source == "home") {
+    for (let serv of hlp.getConnectedServers(ns, source, ["home", "darkweb"], true)) {
+        if (source == "home") {
+            trgts.push(serv);
+        } else {
+            if ((ns.getServerMaxRam(serv) != 0)) {
                 trgts.push(serv);
-            } else {
-                if ((ns.getServerMaxRam(serv) != 0)) {
-                    trgts.push(serv);
-                }
             }
         }
     }
@@ -40,15 +37,15 @@ export async function main(ns) {
                             ns.print(`\nRunning "${hlp.hacker}" targeting [${trgt.toUpperCase()}] with ${threads} threads!`);
                         } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!` +
                                 `\nNot enough free RAM!` +
-                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source) * threads}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 1)}GB`);
-                } catch {
+                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source) * threads}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                    } catch {
                         if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
                             ns.print(`\nSetting threads to 1 for [${trgt.toUpperCase()}]!`);
                             ns.run(hlp.hacker, 1, trgt);
                             ns.print(`Running "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!`)
                         } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!` +
                                 `\nNot enough free RAM!` +
-                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source)}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 1)}GB`);
+                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source)}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
                     }
                 } else {
                     if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
@@ -62,7 +59,7 @@ export async function main(ns) {
 
     if (source == "home") {
         ns.print(`\nStarting "srvCallRunner.js"...`)
-        ns.run("srvCallRunner.js");
+        ns.exec("srvCallRunner.js", "home");
         ns.tail("srvCallRunner.js");
     } else ns.print(`Skipping call for "srvCallRunner.js"!`);
 }

@@ -27,45 +27,36 @@ export var buySrvName = "bitch";
 
 /** 
  * Returns numbers as shown in the game.
- * @param { import("..").NS } ns
- * @param { Number } uglyNum A fairly large number.
+ * @param { import("..").NS } _ns
+ * @param { Number } uglyNum A fairly large number or zero if none is provided.
  * @param { Number } decimal Optional. How many digits behind the decimal point. Defaults to zero if undefined.
+ * @param { boolean } isItRAM
  * @returns Returns numbers as shown in the game.
  */
-export function getPrettyNumber(ns, uglyNum, decimal) {
-    let fix = decimal ?? 0;
-    var i = 0, prttyNum = ["", "k", "m", "b", "t", "q", "Q", "s"];
-    if (!uglyNum && uglyNum != 0) {
-        ns.printf(`ERROR: No number passed.`)
-        return `???.???${prttyNum[Math.floor(Math.random() * prttyNum.length)]}`;
-    }
+export function getPrettyNumber(_ns, uglyNum, decimal, isItRAM) {
+    var i = 0, prttyNum = [["", "GB"], ["k", "TB"], ["m", "PB"], ["b", "EB"], ["t", "ZB"], ["q", "YB"], ["Q", "BB"], ["s", "?B"]];
+    uglyNum ??=  0;
     while (uglyNum > 999) {
-        uglyNum = uglyNum / 1000;
+        uglyNum /= 1000;
         ++i;
     }
-    return `${uglyNum.toFixed(fix) + prttyNum[i]}`;
+    return `${uglyNum.toFixed(decimal ?? 0) + prttyNum[i][(isItRAM ?? false) ? 1 : 0]}`;
 }
 
 /**
  * Recursively scan for available connected servers.
  * @param { import("..").NS } ns
  * @param { String } hostname The hostname where the scanner will start.
+ * @param { Array } exclusions Optional. Default: [] An array of servers to exclude.
+ * @param { Boolean } addPurchased Optional. Default: false. If set to true, will also exclude your purchased servers.
  * @returns An array of servers.
  */
-export function getConnectedServers(ns, hostname) {
+export function getConnectedServers(ns, hostname, exclusions, addPurchased) {
     let source = [hostname];
-    Array(30).fill().map(y => source = [...new Set(source.map(s => [s, ns.scan(s)]).flat(2))]);
-    return source;
-}
-
-/**
- * Returns an array of servers that you might not touch.
- * @param { import("../.").NS } ns 
- * @param { Boolean } addMySrvrs Optional. Default: false. If set to true, will exclude your purchased servers.
- */
-export function notMySrvs(ns, addMySrvrs) {
-    let checker = addMySrvrs ?? false;
-    let notThese = ["home", "darweb"];
-    if (checker) { notThese.concat(ns.getPurchasedServers()) }
-    return notThese;
+    let output = [];
+    exclusions ??= [];
+    if (addPurchased ?? false) exclusions = exclusions.concat(ns.getPurchasedServers());
+    Array(30).fill().map(_y => source = [...new Set(source.map(s => [s, ns.scan(s)]).flat(2))]);
+    for (let src of source) { if (!exclusions.includes(src)) output.push(src) }
+    return output;
 }
