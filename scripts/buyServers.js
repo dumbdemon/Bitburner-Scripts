@@ -33,8 +33,9 @@ export async function main(ns) {
                 ++i;
             }
             if (reqMny > 0) {
-                if (ns.getPurchasedServers().length == startCnt) { ns.tprintf(`No servers purchased!\nYou need at least ${hlp.getPrettyNumber(ns, oneSrvCost, 3)} for one server.`) }
-                else ns.tprintf(`You need at least $${hlp.getPrettyNumber(ns, reqMny, 3)} to get ${ns.getPurchasedServerLimit() - ns.getPurchasedServers().length} more server(s)!`);
+                let amtMore = ns.getPurchasedServerLimit() - ns.getPurchasedServers().length;
+                if (ns.getPurchasedServers().length == startCnt) ns.tprintf(`No servers purchased!\nYou need at least ${hlp.getPrettyNumber(ns, oneSrvCost, 3)} for one server.`)
+                else ns.tprintf(`You need at least $${hlp.getPrettyNumber(ns, reqMny, 3)} to get ${amtMore == 1 ? "one" : amtMore} more server${amtMore == 1 ? "!" : "s!" }`);
             }
             break;
         case "query":
