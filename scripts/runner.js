@@ -12,7 +12,7 @@ export async function main(ns) {
     var source = ns.args[0] ?? "home";
     ns.print(`Started with source [${source.toUpperCase()}]!`);
     let trgts = [];
-    for (let serv of hlp.getConnectedServers(ns, source, ["home", "darkweb"], true)) {
+    for (let serv of hlp.getConnectedServers(ns, source, ["home"], true)) {
         if (source == "home") {
             trgts.push(serv);
         } else {

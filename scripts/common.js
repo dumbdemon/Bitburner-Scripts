@@ -2,28 +2,13 @@
 export async function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     ns.disableLog(`ALL`);
-    ns.tprintf(`This is a helper script containing commonaly used scripting.`);
+    ns.tprintf(`This is a helper script containing commonaly used scripting/keywords.`);
 }
 
-/**
- * String literal for the hacker script.
- */
-export var hacker = "hckthat.js";
-
-/**
- * String literal for the runner script
- */
-export var runner = "runner.js";
-
-/**
- * String literal for the common script
- */
-export var commons = "common.js";
-
-/**
- * String literal for the default name for buySevers.js
- */
-export var buySrvName = "bitch";
+export var hacker = "hckthat.js"; //String literal for the hacker script.
+export var runner = "runner.js"; //String literal for the runner script
+export var commons = "common.js"; //String literal for the common script
+export var buySrvName = "bitch"; //String literal for the default name for buySevers.js
 
 /** 
  * Returns numbers as shown in the game.
@@ -35,12 +20,12 @@ export var buySrvName = "bitch";
  */
 export function getPrettyNumber(_ns, uglyNum, decimal, isItRAM) {
     var i = 0, prttyNum = [["", "GB"], ["k", "TB"], ["m", "PB"], ["b", "EB"], ["t", "ZB"], ["q", "YB"], ["Q", "BB"], ["s", "?B"]];
-    uglyNum ??=  0;
+    uglyNum ??= 0;
     while (uglyNum > 999) {
         uglyNum /= 1000;
         ++i;
     }
-    return `${uglyNum.toFixed(decimal ?? 0) + prttyNum[i][(isItRAM ?? false) ? 1 : 0]}`;
+    return uglyNum.toFixed(decimal ?? 0) + prttyNum[i][isItRAM ?? false ? 1 : 0];
 }
 
 /**
