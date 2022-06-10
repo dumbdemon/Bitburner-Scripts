@@ -16,10 +16,17 @@ export async function main(ns) {
         if (source == "home") {
             trgts.push(serv);
         } else {
-            if ((ns.getServerMaxRam(serv) != 0)) {
+            if (ns.getServerMaxRam(serv) != 0) {
                 trgts.push(serv);
             }
         }
+    }
+
+    if (source == "home" && ns.ps("home").length == trgts.length + 2) {
+        ns.print(`Already hacking everything!\nSkipping remaining script and starting "srvCallRunner.js"...`)
+        ns.exec("srvCallRunner.js", "home");
+        ns.tail("srvCallRunner.js");
+        ns.exit();
     }
 
     for (let trgt of trgts) {
@@ -51,15 +58,16 @@ export async function main(ns) {
                     if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
                         ns.run(hlp.hacker, 1, trgt);
                         ns.print(`\nRunning "${hlp.hacker}" on [${source.toUpperCase()}] targeting [${trgt.toUpperCase()}]!`)
-                    } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!`);
+                    } else {
+                        ns.print(`\nCan no longer target [${trgt.toUpperCase()}]!\nNot enough free RAM!\nExiting...`);
+                        ns.exit();
+                    }
                 }
             } else ns.print(`\n"${hlp.hacker}" is already targeting [${trgt.toUpperCase()}] on [${source.toUpperCase()}]!`);
         } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl (${srvhckLvl})!`);
     }
 
-    if (source == "home") {
-        ns.print(`\nStarting "srvCallRunner.js"...`)
-        ns.exec("srvCallRunner.js", "home");
-        ns.tail("srvCallRunner.js");
-    } else ns.print(`Skipping call for "srvCallRunner.js"!`);
+    ns.print(`\nStarting "srvCallRunner.js"...`)
+    ns.exec("srvCallRunner.js", "home");
+    ns.tail("srvCallRunner.js");
 }

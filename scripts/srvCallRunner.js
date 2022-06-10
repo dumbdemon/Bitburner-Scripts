@@ -4,14 +4,14 @@ import * as hlp from "./common";
 export async function main(ns) {
     ns.disableLog(`ALL`);
     let recievers = [];
-    for (let serv of hlp.getConnectedServers(ns, "home")) {
+    for (let serv of hlp.getConnectedServers(ns, "home", ["home"])) {
         if (ns.getServerMaxRam(serv) != 0) {
             recievers.push(serv);
         }
     }
 
-    var ramMIN = ns.getScriptRam(hlp.runner, "home") + ns.getScriptRam(hlp.hacker, "home");
-    ns.print(`I need at least ${ramMIN}GB of RAM on all targetable servers! Checking if "${hlp.runner}" can run...`)
+    var ramMIN = Math.ceil(ns.getScriptRam(hlp.runner, "home") + ns.getScriptRam(hlp.hacker, "home"));
+    ns.print(`I need at least ${hlp.getPrettyNumber(ns, ramMIN, 2, true)} of RAM on all targetable servers! Checking if "${hlp.runner}" can run...`)
 
     for (let trgt of recievers) {
         if (ns.hasRootAccess(trgt)) {
