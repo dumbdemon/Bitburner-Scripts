@@ -69,7 +69,7 @@ export async function main(ns) {
                         ns.run(hlp.hacker, 1, trgt);
                         ns.print(`\nRunning "${hlp.hacker}" on [${source.toUpperCase()}] targeting [${trgt.toUpperCase()}]!`)
                     } else {
-                        ns.print(`\nCan no longer target [${trgt.toUpperCase()}]!\nNot enough free RAM!\nExiting...`);
+                        ns.print(`\nCan no longer target [${source.toUpperCase()}]!\nNot enough free RAM!\nExiting...`);
                         ns.exit();
                     }
                 }
