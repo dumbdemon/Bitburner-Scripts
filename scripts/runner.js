@@ -42,17 +42,27 @@ export async function main(ns) {
                         if (freeRAM > (ns.getScriptRam(hlp.hacker, source) * threads)) {
                             ns.run(hlp.hacker, threads, trgt);
                             ns.print(`\nRunning "${hlp.hacker}" targeting [${trgt.toUpperCase()}] with ${threads} threads!`);
-                        } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!` +
-                                `\nNot enough free RAM!` +
-                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source) * threads}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                        } else {
+                            ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.getScriptRam(hlp.hacker, source) * threads}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                            if (!ns.hasRootAccess(trgt)) {
+                                ns.print(`\nAttempting to gain root access anyway`);
+                                ns.exec("gainRootAccess.js", "home", 1, trgt);
+                                ns.asleep(3000);
+                            }
+                        }
                     } catch {
                         if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
                             ns.print(`\nSetting threads to 1 for [${trgt.toUpperCase()}]!`);
                             ns.run(hlp.hacker, 1, trgt);
                             ns.print(`Running "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!`)
-                        } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!` +
-                                `\nNot enough free RAM!` +
-                                `\nNeeded ${ns.getScriptRam(hlp.hacker, source)}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                        } else {
+                            ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.getScriptRam(hlp.hacker, source)}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                            if (!ns.hasRootAccess(trgt)) {
+                                ns.print(`\nAttempting to gain root access anyway`);
+                                ns.exec("gainRootAccess.js", "home", 1, trgt);
+                                ns.asleep(3000);
+                            }
+                        }
                     }
                 } else {
                     if (freeRAM > ns.getScriptRam(hlp.hacker, source)) {
