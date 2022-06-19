@@ -32,7 +32,8 @@ export async function main(ns) {
     for (let trgt of trgts) {
         var srvhckLvl = ns.getServerRequiredHackingLevel(trgt);
         var myHckLvl = ns.getHackingLevel();
-        let freeRAM = ns.getServerMaxRam(source) - ns.getServerUsedRam(source);
+        let freeRAM = (ns.getServerMaxRam(source) - ns.getServerUsedRam(source)) * 1e6;
+        const hackerRAM = ns.getScriptRam(hlp.hacker, source) * threads * 1e6;
 
         if (myHckLvl >= srvhckLvl) {
             if (!ns.getRunningScript(hlp.hacker, source, trgt)) {
@@ -43,7 +44,7 @@ export async function main(ns) {
                             ns.run(hlp.hacker, threads, trgt);
                             ns.print(`\nRunning "${hlp.hacker}" targeting [${trgt.toUpperCase()}] with ${threads} threads!`);
                         } else {
-                            ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.getScriptRam(hlp.hacker, source) * threads}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                            ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.nFormat(hackerRAM, "0.00b")}/Have ${ns.nFormat(freeRAM, "0.00b")}`);
                             if (!ns.hasRootAccess(trgt)) {
                                 ns.print(`\nAttempting to gain root access anyway`);
                                 ns.exec("gainRootAccess.js", "home", 1, trgt);
@@ -56,7 +57,7 @@ export async function main(ns) {
                             ns.run(hlp.hacker, 1, trgt);
                             ns.print(`Running "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!`)
                         } else {
-                            ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.getScriptRam(hlp.hacker, source)}GB/Have ${hlp.getPrettyNumber(ns, freeRAM, 2, true)}`);
+                            ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.nFormat(hackerRAM, "0.00b")}/Have ${ns.nFormat(freeRAM, "0.00b")}`);
                             if (!ns.hasRootAccess(trgt)) {
                                 ns.print(`\nAttempting to gain root access anyway`);
                                 ns.exec("gainRootAccess.js", "home", 1, trgt);
@@ -77,7 +78,9 @@ export async function main(ns) {
         } else ns.print(`\nCan't run "${hlp.hacker}" targeting [${trgt.toUpperCase()}]!\nCurrent hacking Lvl (${myHckLvl}) is less than required hacking Lvl (${srvhckLvl})!`);
     }
 
-    ns.print(`\nStarting "srvCallRunner.js"...`)
-    ns.exec("srvCallRunner.js", "home");
-    ns.tail("srvCallRunner.js");
+    if (source == "home") {
+        ns.print(`\nStarting "srvCallRunner.js"...`)
+        ns.asleep(3000);
+        ns.spawn("srvCallRunner.js");
+    }
 }

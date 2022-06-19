@@ -10,8 +10,8 @@ export async function main(ns) {
         }
     }
 
-    var ramMIN = Math.ceil(ns.getScriptRam(hlp.runner, "home") + ns.getScriptRam(hlp.hacker, "home"));
-    ns.print(`I need at least ${hlp.getPrettyNumber(ns, ramMIN, 2, true)} of RAM on all targetable servers! Checking if "${hlp.runner}" can run...`)
+    var ramMIN = Math.ceil(ns.getScriptRam(hlp.runner, "home") + ns.getScriptRam(hlp.hacker, "home")) * 1e9;
+    ns.print(`I need at least ${ns.nFormat(ramMIN, "0.00b")} of RAM on all targetable servers! Checking if "${hlp.runner}" can run...`)
 
     for (let trgt of recievers) {
         if (ns.hasRootAccess(trgt)) {

@@ -5,28 +5,10 @@ export async function main(ns) {
     ns.tprintf(`This is a helper script containing commonaly used scripting/keywords.`);
 }
 
-export var hacker = "hckthat.js"; //String literal for the hacker script.
-export var runner = "runner.js"; //String literal for the runner script
-export var commons = "common.js"; //String literal for the common script
-export var buySrvName = "bitch"; //String literal for the default name for buySevers.js
-
-/** 
- * Returns numbers as shown in the game.
- * @param { import("..").NS } _ns
- * @param { Number } uglyNum A fairly large number or zero if none is provided.
- * @param { Number } decimal Optional. How many digits behind the decimal point. Defaults to zero if undefined.
- * @param { boolean } isItRAM
- * @returns Returns numbers as shown in the game.
- */
-export function getPrettyNumber(_ns, uglyNum, decimal, isItRAM) {
-    var i = 0, prttyNum = [["", "GB"], ["k", "TB"], ["m", "PB"], ["b", "EB"], ["t", "ZB"], ["q", "YB"], ["Q", "BB"], ["s", "?B"]];
-    uglyNum ??= 0;
-    while (uglyNum > 999) {
-        uglyNum /= 1000;
-        ++i;
-    }
-    return uglyNum.toFixed(decimal ?? 0) + prttyNum[i][isItRAM ?? false ? 1 : 0];
-}
+export const hacker = "hckthat.js"; //String literal for the hacker script.
+export const runner = "runner.js"; //String literal for the runner script
+export const commons = "common.js"; //String literal for the common script
+export const buySrvName = "bitch"; //String literal for the default name for buySevers.js
 
 /**
  * Recursively scan for available connected servers.

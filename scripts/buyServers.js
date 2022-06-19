@@ -34,23 +34,21 @@ export async function main(ns) {
             }
             if (reqMny > 0) {
                 let amtMore = ns.getPurchasedServerLimit() - ns.getPurchasedServers().length;
-                if (ns.getPurchasedServers().length == startCnt) ns.tprintf(`No servers purchased!\nYou need at least ${hlp.getPrettyNumber(ns, oneSrvCost, 3)} for one server.`)
-                else ns.tprintf(`You need at least $${hlp.getPrettyNumber(ns, reqMny, 3)} to get ${amtMore == 1 ? "one" : amtMore} more server${amtMore == 1 ? "!" : "s!" }`);
+                if (ns.getPurchasedServers().length == startCnt) ns.tprintf(`No servers purchased!\nYou need at least ${ns.nFormat(oneSrvCost, "$0.000a")} for one server.`)
+                else ns.tprintf(`You need at least ${ns.nFormat(reqMny, "$0.000a")} to get ${amtMore == 1 ? "one" : amtMore} more server${amtMore == 1 ? "!" : "s!" }`);
             }
             break;
         case "query":
             if (ns.getPurchasedServers().length == ns.getPurchasedServerLimit()) {
                 ns.tprintf(`You don't need anymore servers!`);
                 if (isFinite(queryMny)) {
-                    ns.tprintf(`However, you will need $${hlp.getPrettyNumber(ns, queryMny, 3)} to buy ${ns.getPurchasedServerLimit()} servers with ${hlp.getPrettyNumber(ns, RAM, 2, true)} of RAM.` +
-                    `\nFor at least one, you need $${hlp.getPrettyNumber(ns, oneSrvCost, 3)}.`);
+                    ns.tprintf(`However, you will need ${ns.nFormat(queryMny, "$0.000a")} to buy ${ns.getPurchasedServerLimit()} servers with ${ns.nFormat(RAM * 1e6, "0.00b")} of RAM\nFor at least one, you need ${ns.nFormat(oneSrvCost, "$0.000a")}.`);
                 } else {
                     ns.tprintf(`However, the RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
                 }
             } else if (isFinite(reqMny)) {
                 queryMny -= (ns.getPurchasedServerCost(RAM) * startCnt);
-                ns.tprintf(`You will need $${hlp.getPrettyNumber(ns, queryMny, 3)} to buy ${ns.getPurchasedServerLimit() - startCnt} servers with ${hlp.getPrettyNumber(ns, RAM, 2,true)} of RAM.` +
-                `\nFor at least one, you need $${hlp.getPrettyNumber(ns, oneSrvCost, 3)}.`);
+                ns.tprintf(`You will need ${ns.nFormat(queryMny, "$0.000a")} to buy ${ns.getPurchasedServerLimit() - startCnt} servers with ${ns.nFormat(RAM * 1e6, "0.00b")} of RAM.\nFor at least one, you need ${ns.nFormat(oneSrvCost, "$0.000a")}.`);
             } else {
                 ns.tprintf(`The RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
             }
