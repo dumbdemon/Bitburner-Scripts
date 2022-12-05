@@ -1,3 +1,5 @@
+[![Codefactor](https://www.codefactor.io/repository/github/dumbdemon/bitburner-scripts/badge)](https://www.codefactor.io/repository/github/dumbdemon/bitburner-scripts)
+
 # Bitburner-Scripts
 My personal backup of my Butburner scripts. Feel free to submit an Issue if you see dumpster fire!
 
