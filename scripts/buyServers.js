@@ -1,18 +1,18 @@
 import {hacker, commons, buySrvName, runner} from "./common";
 
 /** @param {import("../.").NS } ns */
-export async function main(ns) {
+export function main(ns) {
     ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     const whatDo = ns.args[0];
     const RAM = ns.args[1] ?? 8;
     const oneSrvCost = ns.getPurchasedServerCost(RAM);
-    let startCnt = ns.getPurchasedServers().length;
-    let srvrAmt = ns.getPurchasedServerLimit() - ns.getPurchasedServers().length;
+    const startCnt = ns.getPurchasedServers().length;
+    const srvrAmt = ns.getPurchasedServerLimit() - ns.getPurchasedServers().length;
     let reqMny = srvrAmt * oneSrvCost;
     let queryMny = ns.getPurchasedServerLimit() * oneSrvCost;
     
     switch (whatDo) {
-        case "buy":
+        case "buy": {
             let i = startCnt;
             if (!isFinite(reqMny)) {
                 ns.tprintf(`The RAM you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
@@ -23,7 +23,7 @@ export async function main(ns) {
             }
             while (i < ns.getPurchasedServerLimit()) {
                 if (ns.getServerMoneyAvailable("home") > oneSrvCost) {
-                    let mySrv = ns.purchaseServer(`${buySrvName}-${i}`, RAM);
+                    const mySrv = ns.purchaseServer(`${buySrvName}-${i}`, RAM);
                     ns.scp(commons, mySrv);
                     ns.scp(hacker, mySrv);
                     ns.scp(runner, mySrv);
@@ -38,7 +38,8 @@ export async function main(ns) {
                 else ns.tprintf(`You need at least ${ns.nFormat(reqMny, "$0.000a")} to get ${amtMore === 1 ? "one" : amtMore} more server${amtMore === 1 ? "!" : "s!" }`);
             }
             break;
-        case "query":
+        }
+        case "query": {
             if (ns.getPurchasedServers().length === ns.getPurchasedServerLimit()) {
                 ns.tprintf(`You don't need anymore servers!`);
                 if (isFinite(queryMny)) {
@@ -53,7 +54,9 @@ export async function main(ns) {
                 ns.tprintf(`The RAM query you passed has resulted in INFINITE required money. Obviously, you don't have that!`);
             }
             break;
-        default:
+        }
+        default: {
             ns.tprintf(`Type \`run buyServers.js buy <RAM>\` to buy servers, or type \`run buyServers.js query <RAM>\` to get an estimate.\nIf no RAM is passed, the script will assume 8GB of RAM.`);
+        }
     }
 }

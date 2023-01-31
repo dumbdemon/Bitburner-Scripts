@@ -3,15 +3,15 @@ import {} from "./common";
 /** @param {import("../.").NS } ns */
 const rpeTxt = "This does nothing for now!";
 
-export async function main(ns) {
+export function main(ns) {
     ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     ns.disableLog(`ALL`);
 
-    let stonks = ns.stock;
-    let symbols = stonks.getSymbols();
-    let whatDo = ns.args;
+    const stonks = ns.stock;
+    const symbols = stonks.getSymbols();
+    const whatDo = ns.args;
     let caller = whatDo[0];
-    let calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
+    const calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
 
     switch (caller) {
         case "query": {
@@ -38,7 +38,7 @@ export async function main(ns) {
             break;
         }
         default: {
-            const what2say = "A script to buy stocks!";
+            let what2say = "A script to buy stocks!";
             if (caller && !calls.includes(caller)) { what2say = `[${caller}] is not a recognized command!` }
             ns.tprintf(`${what2say}\nList of commands:` +
             `\nquery <type? owned | available> [...args]`+

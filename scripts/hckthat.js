@@ -18,7 +18,7 @@ export async function main(ns) {
 				["HTTPWorm.exe", ns.httpworm],
 				["relaySMTP.exe", ns.relaysmtp],
 				["SQLInject.exe", ns.sqlinject]
-			].map(exe => {
+			].forEach(exe => {
 				if (ns.fileExists(exe[0])) {
 					exe[1](target);
 					ns.print(`Deployed ${exe[0]} on ${target.toUpperCase()}!`)

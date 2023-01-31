@@ -1,7 +1,7 @@
 import {getConnectedServers, runner, hacker, commons} from "./common";
 
 /** @param {import("..").NS } ns */
-export async function main(ns) {
+export function main(ns) {
     ns.disableLog(`ALL`);
     const recievers = [];
     for (const serv of getConnectedServers(ns, "home", ["home"])) {
@@ -10,7 +10,7 @@ export async function main(ns) {
         }
     }
 
-    var ramMIN = Math.ceil(ns.getScriptRam(runner, "home") + ns.getScriptRam(hacker, "home")) * 1e9;
+    const ramMIN = Math.ceil(ns.getScriptRam(runner, "home") + ns.getScriptRam(hacker, "home")) * 1e9;
     ns.print(`I need at least ${ns.nFormat(ramMIN, "0.00b")} of RAM on all targetable servers! Checking if "${runner}" can run...`)
 
     for (const trgt of recievers) {

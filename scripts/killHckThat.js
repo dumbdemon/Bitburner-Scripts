@@ -1,7 +1,7 @@
 import {getConnectedServers, hacker, runner} from "./common";
 
 /** @param {import("..").NS } ns */
-export async function main(ns) {
+export function main(ns) {
     ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     const workingList = getConnectedServers(ns, "home", ["home"]);
 

@@ -1,5 +1,5 @@
 /** @param { import("..").NS } ns */
-export async function main(ns) {
+export function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
     ns.disableLog(`ALL`);
     ns.tprintf(`This is a helper script containing commonaly used scripting/keywords.`);

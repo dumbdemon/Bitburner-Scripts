@@ -9,7 +9,6 @@ export async function main(ns) {
     }
 	// skipcq: JS-0003
     while (true) {
-        const files = ns.ls('home', '.js');
         for (const file of files) {
             const contents = ns.read(file);
             const hash = getHash(contents);
@@ -34,12 +33,12 @@ export async function main(ns) {
         await ns.sleep(1000);
     }
 }
-const getHash = (input) => {
+function getHash(input) {
     let hash = 0;
     if (input.length === 0)
         return hash;
-    for (const i = 0; i < input.length; i++) {
-        let chr = input.charCodeAt(i);
+    for (let i = 0; i < input.length; i++) {
+        const chr = input.charCodeAt(i);
         hash = ((hash << 5) - hash) + chr;
         hash |= 0; // Convert to 32bit integer
     }
