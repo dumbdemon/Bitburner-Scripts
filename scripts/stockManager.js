@@ -7,7 +7,7 @@ export function main(ns) {
     ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     ns.disableLog(`ALL`);
 
-    const stonks = ns.stock;
+    // const stonks = ns.stock;
     // const symbols = stonks.getSymbols();
     const whatDo = ns.args;
     const caller = whatDo[0];
