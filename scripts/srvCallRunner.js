@@ -1,30 +1,30 @@
-import * as hlp from "./common";
+import {getConnectedServers, runner, hacker, commons} from "./common";
 
 /** @param {import("..").NS } ns */
 export async function main(ns) {
     ns.disableLog(`ALL`);
-    let recievers = [];
-    for (let serv of hlp.getConnectedServers(ns, "home", ["home"])) {
-        if (ns.getServerMaxRam(serv) != 0) {
+    const recievers = [];
+    for (const serv of getConnectedServers(ns, "home", ["home"])) {
+        if (ns.getServerMaxRam(serv) !== 0) {
             recievers.push(serv);
         }
     }
 
-    var ramMIN = Math.ceil(ns.getScriptRam(hlp.runner, "home") + ns.getScriptRam(hlp.hacker, "home")) * 1e9;
-    ns.print(`I need at least ${ns.nFormat(ramMIN, "0.00b")} of RAM on all targetable servers! Checking if "${hlp.runner}" can run...`)
+    var ramMIN = Math.ceil(ns.getScriptRam(runner, "home") + ns.getScriptRam(hacker, "home")) * 1e9;
+    ns.print(`I need at least ${ns.nFormat(ramMIN, "0.00b")} of RAM on all targetable servers! Checking if "${runner}" can run...`)
 
-    for (let trgt of recievers) {
+    for (const trgt of recievers) {
         if (ns.hasRootAccess(trgt)) {
             if (ns.getServerMaxRam(trgt) > ramMIN) {
-                ns.print(`Killing all scipts using "${hlp.hacker}" on [${trgt.toUpperCase()}]!`)
-                for (let srv of hlp.getConnectedServers(ns, trgt)) { ns.kill(hlp.hacker, trgt, srv) }
+                ns.print(`Killing all scipts using "${hacker}" on [${trgt.toUpperCase()}]!`)
+                for (const srv of getConnectedServers(ns, trgt)) { ns.kill(hacker, trgt, srv) }
 
-                await ns.scp(hlp.commons, trgt);
-                await ns.scp(hlp.hacker, trgt);
-                await ns.scp(hlp.runner, trgt);
+                ns.scp(commons, trgt);
+                ns.scp(hacker, trgt);
+                ns.scp(runner, trgt);
     
-                ns.exec(hlp.runner, trgt, 1, trgt);
-                ns.print(`\u00bb "${hlp.runner}" has started on [${trgt.toUpperCase()}]!`);
+                ns.exec(runner, trgt, 1, trgt);
+                ns.print(`\u00bb "${runner}" has started on [${trgt.toUpperCase()}]!`);
             } else {
                 ns.print(`Unable to run on [${trgt.toUpperCase()}]!\n\u00bb Not enough RAM!`)
             }

@@ -1,4 +1,5 @@
 [![Codefactor](https://www.codefactor.io/repository/github/dumbdemon/bitburner-scripts/badge)](https://www.codefactor.io/repository/github/dumbdemon/bitburner-scripts)
+[![DeepSource](https://deepsource.io/gh/dumbdemon/Bitburner-Scripts.svg/?label=active+issues&show_trend=true&token=JCvWji_KjPd_8b-ba95s7E_O)](https://deepsource.io/gh/dumbdemon/Bitburner-Scripts/?ref=repository-badge)
 
 # Bitburner-Scripts
 My personal backup of my Butburner scripts. Feel free to submit an Issue if you see dumpster fire!

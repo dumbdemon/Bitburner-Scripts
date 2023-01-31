@@ -2,8 +2,9 @@
 export async function main(ns) {
     ns.disableLog(`ALL`);
 	
-	var target = ns.args[0];
+	const target = ns.args[0];
     try {
+        // skipcq: JS-D008
         [
             ["BruteSSH.exe", ns.brutessh],
             ["FTPCrack.exe", ns.ftpcrack],

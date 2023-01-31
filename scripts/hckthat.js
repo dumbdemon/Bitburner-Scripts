@@ -6,9 +6,9 @@ export async function main(ns) {
 	ns.enableLog(`hack`);
 	ns.enableLog(`grow`);
 	
-	var target = ns.args[0];
-	var mnyThresh = ns.getServerMaxMoney(target) * 0.75;
-	var secThresh = ns.getServerMinSecurityLevel(target) + 5;
+	const target = ns.args[0];
+	const mnyThresh = ns.getServerMaxMoney(target) * 0.75;
+	const secThresh = ns.getServerMinSecurityLevel(target) + 5;
 
 	if (!ns.hasRootAccess(target)) {
 		try {
@@ -30,6 +30,7 @@ export async function main(ns) {
 			ns.exit();
 		}
 	}
+	// skipcq: JS-0003
 	while (true) {
 		if (ns.getServerSecurityLevel(target) > secThresh) {
 			await ns.weaken(target);

@@ -1,39 +1,44 @@
-import * as hlp from "./common";
+import {} from "./common";
 
 /** @param {import("../.").NS } ns */
-var rpeTxt = "This does nothing for now!";
+const rpeTxt = "This does nothing for now!";
 
 export async function main(ns) {
     ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
     ns.disableLog(`ALL`);
 
-    var stonks = ns.stock;
-    var symbols = stonks.getSymbols();
-    var whatDo = ns.args;
-    var caller = whatDo[0];
-    var calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
+    let stonks = ns.stock;
+    let symbols = stonks.getSymbols();
+    let whatDo = ns.args;
+    let caller = whatDo[0];
+    let calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
 
     switch (caller) {
-        case "query":
+        case "query": {
             query(ns);
             break;
-        case "buy":
+        }
+        case "buy": {
             buy(ns);
             break;
-        case "buyMax":
+        }
+        case "buyMax": {
             buyMax(ns);
             break;
+        }
         case "sell":
             sell(ns);
             break;
-        case "sellMax":
+        case "sellMax": {
             sellMax(ns);
             break;
-        case "sellAll":
+        }
+        case "sellAll": {
             sellAll(ns);
             break;
-        default:
-            let what2say = "A script to buy stocks!";
+        }
+        default: {
+            const what2say = "A script to buy stocks!";
             if (caller && !calls.includes(caller)) { what2say = `[${caller}] is not a recognized command!` }
             ns.tprintf(`${what2say}\nList of commands:` +
             `\nquery <type? owned | available> [...args]`+
@@ -42,6 +47,7 @@ export async function main(ns) {
             `\nsell <stock> <amount>` +
             `\nsellMax <stock>` +
             `\nsellAll`);
+        }
     }
 }
 

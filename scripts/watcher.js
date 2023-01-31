@@ -7,19 +7,20 @@ export async function main(ns) {
         const contents = ns.read(file);
         hashes[file] = getHash(contents);
     }
+	// skipcq: JS-0003
     while (true) {
         const files = ns.ls('home', '.js');
         for (const file of files) {
             const contents = ns.read(file);
             const hash = getHash(contents);
-            if (hash != hashes[file]) {
+            if (hash !== hashes[file]) {
                 ns.tprintf(`INFO: Detected change in ${file}`);
                 const processes = ns.ps().filter((p) => {
-                    return p.filename == file;
+                    return p.filename === file;
                 });
                 for (const process of processes) {
                     ns.tprintf(`INFO: Restarting ${process.filename} ${process.args} -t ${process.threads}`);
-                    if (process.filename != ns.getScriptName()) {
+                    if (process.filename !== ns.getScriptName()) {
                         ns.kill(process.pid);
                         ns.run(process.filename, process.threads, ...process.args);
                     }
@@ -34,11 +35,11 @@ export async function main(ns) {
     }
 }
 const getHash = (input) => {
-    let hash = 0, i, chr;
+    let hash = 0;
     if (input.length === 0)
         return hash;
-    for (i = 0; i < input.length; i++) {
-        chr = input.charCodeAt(i);
+    for (const i = 0; i < input.length; i++) {
+        let chr = input.charCodeAt(i);
         hash = ((hash << 5) - hash) + chr;
         hash |= 0; // Convert to 32bit integer
     }

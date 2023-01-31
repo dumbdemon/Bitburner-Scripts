@@ -20,10 +20,10 @@ export const buySrvName = "bitch"; //String literal for the default name for buy
  */
 export function getConnectedServers(ns, hostname, exclusions, addPurchased) {
     let source = [hostname];
-    let output = [];
+    const output = [];
     exclusions ??= [];
     if (addPurchased ?? false) exclusions = exclusions.concat(ns.getPurchasedServers());
-    Array(30).fill().map(_y => source = [...new Set(source.map(s => [s, ns.scan(s)]).flat(2))]);
-    for (let src of source) { if (!exclusions.includes(src)) output.push(src) }
+    Array(30).fill().map(_y => source = [...new Set(source.map(s => [s, ns.scan(s)]).flat(2))]); // skipcq: JS-0086, JS-D008
+    for (const src of source) { if (!exclusions.includes(src)) output.push(src) }
     return output;
 }
