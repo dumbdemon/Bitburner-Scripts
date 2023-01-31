@@ -1,8 +1,10 @@
 /** @param { import("..").NS } ns */
 export async function main(ns) {
-    ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
-    ns.disableLog(`ALL`);
-    ns.tprintf(`This is a helper script containing commonaly used scripting/keywords.`);
+  ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
+  ns.disableLog(`ALL`);
+  ns.tprintf(
+    `This is a helper script containing commonaly used scripting/keywords.`
+  );
 }
 
 export const hacker = "hckthat.js"; //String literal for the hacker script.
@@ -19,11 +21,19 @@ export const buySrvName = "bitch"; //String literal for the default name for buy
  * @returns An array of servers.
  */
 export function getConnectedServers(ns, hostname, exclusions, addPurchased) {
-    let source = [hostname];
-    let output = [];
-    exclusions ??= [];
-    if (addPurchased ?? false) exclusions = exclusions.concat(ns.getPurchasedServers());
-    Array(30).fill().map(_y => source = [...new Set(source.map(s => [s, ns.scan(s)]).flat(2))]);
-    for (let src of source) { if (!exclusions.includes(src)) output.push(src) }
-    return output;
+  let source = [hostname];
+  let output = [];
+  exclusions ??= [];
+  if (addPurchased ?? false)
+    exclusions = exclusions.concat(ns.getPurchasedServers());
+  Array(30)
+    .fill()
+    .map(
+      (_y) =>
+        (source = [...new Set(source.map((s) => [s, ns.scan(s)]).flat(2))])
+    );
+  for (let src of source) {
+    if (!exclusions.includes(src)) output.push(src);
+  }
+  return output;
 }
