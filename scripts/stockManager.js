@@ -8,9 +8,9 @@ export function main(ns) {
     ns.disableLog(`ALL`);
 
     const stonks = ns.stock;
-    const symbols = stonks.getSymbols();
+    // const symbols = stonks.getSymbols();
     const whatDo = ns.args;
-    let caller = whatDo[0];
+    const caller = whatDo[0];
     const calls = ["query", "buy", "buyMax", "sell", "sellMax", "sellAll"];
 
     switch (caller) {
