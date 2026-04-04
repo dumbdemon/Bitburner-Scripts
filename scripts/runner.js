@@ -2,11 +2,11 @@ import {hacker, buySrvName, getConnectedServers} from './common';
 
 /** @param { import('../.').NS } ns */
 export function main(ns) {
-    ns.disableLog(`ALL`);
+    ns.disableLog('ALL');
 
     if (!ns.isRunning('watcher.js', 'home')) {
         ns.exec('watcher.js', 'home');
-        ns.tprintf(`Running 'watcher.js'!`)
+        ns.tprintf('Running \'watcher.js\'!')
     }
 
     const source = ns.args[0] ?? 'home';
@@ -23,7 +23,7 @@ export function main(ns) {
     }
 
     if (source === 'home' && ns.ps('home').length === trgts.length + 2) {
-        ns.print(`Already hacking everything!\nSkipping remaining script and starting 'srvCallRunner.js'...`)
+        ns.print('Already hacking everything!\nSkipping remaining script and starting \'srvCallRunner.js\'...')
         ns.exec('srvCallRunner.js', 'home');
         ns.tail('srvCallRunner.js');
         ns.exit();
@@ -46,7 +46,7 @@ export function main(ns) {
                         } else {
                             ns.print(`\nCan't run '${hacker}' targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.formatRam(hackerRAM * threads, '0.00b')}/Have ${ns.formatRam(freeRAM, '0.00b')}`);
                             if (!ns.hasRootAccess(trgt)) {
-                                ns.print(`\nAttempting to gain root access anyway`);
+                                ns.print('\nAttempting to gain root access anyway');
                                 ns.exec('gainRootAccess.js', 'home', 1, trgt);
                                 ns.asleep(3000);
                             }
@@ -59,7 +59,7 @@ export function main(ns) {
                         } else {
                             ns.print(`\nCan't run '${hacker}' targeting [${trgt.toUpperCase()}]!\nNot enough free RAM!\nNeeded ${ns.formatRam(hackerRAM, '0.00b')}/Have ${ns.formatRam(freeRAM, '0.00b')}`);
                             if (!ns.hasRootAccess(trgt)) {
-                                ns.print(`\nAttempting to gain root access anyway`);
+                                ns.print('\nAttempting to gain root access anyway');
                                 ns.exec('gainRootAccess.js', 'home', 1, trgt);
                                 ns.asleep(3000);
                             }

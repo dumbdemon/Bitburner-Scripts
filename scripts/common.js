@@ -1,8 +1,8 @@
 /** @param { import('..').NS } ns */
 export function main(ns) {
     ns.tprintf(`~~~~~${ns.getScriptName()} [${ns.args}]~~~~~`);
-    ns.disableLog(`ALL`);
-    ns.tprintf(`This is a helper script containing commonaly used scripting/keywords.`);
+    ns.disableLog('ALL');
+    ns.tprintf('This is a helper script containing commonaly used scripting/keywords.');
 }
 
 export const hacker = 'hckthat.js'; //String literal for the hacker script.

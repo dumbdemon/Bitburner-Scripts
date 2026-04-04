@@ -1,6 +1,6 @@
 /** @param { import('../.').NS } ns */
 export function main(ns) {
-    ns.disableLog(`ALL`);
+    ns.disableLog('ALL');
 	
 	const target = ns.args[0];
     try {

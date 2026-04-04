@@ -5,7 +5,7 @@ const rpeTxt = 'This does nothing for now!';
 
 export function main(ns) {
     ns.tprintf(`\u00bb\u00bb ${ns.getScriptName()} [${ns.args}]`);
-    ns.disableLog(`ALL`);
+    ns.disableLog('ALL');
 
     // const stonks = ns.stock;
     // const symbols = stonks.getSymbols();
@@ -39,14 +39,14 @@ export function main(ns) {
         }
         default: {
             let what2say = 'A script to buy stocks!';
-            if (caller && !calls.includes(caller)) { what2say = `[${caller}] is not a recognized command!` }
-            ns.tprintf(`${what2say}\nList of commands:` +
-            `\nquery <type? owned | available> [...args]`+
-            `\nbuy <stock> <amount>` +
-            `\nbuyMax <stock>` +
-            `\nsell <stock> <amount>` +
-            `\nsellMax <stock>` +
-            `\nsellAll`);
+            if (caller && !calls.includes(caller)) { what2say = '[${caller}] is not a recognized command!' }
+            ns.tprintf('${what2say}\nList of commands:' +
+            '\nquery <type? owned | available> [...args]'+
+            '\nbuy <stock> <amount>' +
+            '\nbuyMax <stock>' +
+            '\nsell <stock> <amount>' +
+            '\nsellMax <stock>' +
+            '\nsellAll');
         }
     }
 }
