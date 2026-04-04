@@ -1,10 +1,10 @@
-/** @param {import("../.").NS } ns */
+/** @param {import('../.').NS } ns */
 
 export async function main(ns) {
-	ns.disableLog(`ALL`);
-	ns.enableLog(`weaken`);
-	ns.enableLog(`hack`);
-	ns.enableLog(`grow`);
+	ns.disableLog('ALL');
+	ns.enableLog('weaken');
+	ns.enableLog('hack');
+	ns.enableLog('grow');
 	
 	const target = ns.args[0];
 	const mnyThresh = ns.getServerMaxMoney(target) * 0.75;
@@ -13,11 +13,11 @@ export async function main(ns) {
 	if (!ns.hasRootAccess(target)) {
 		try {
 			[
-				["BruteSSH.exe", ns.brutessh],
-				["FTPCrack.exe", ns.ftpcrack],
-				["HTTPWorm.exe", ns.httpworm],
-				["relaySMTP.exe", ns.relaysmtp],
-				["SQLInject.exe", ns.sqlinject]
+				['BruteSSH.exe', ns.brutessh],
+				['FTPCrack.exe', ns.ftpcrack],
+				['HTTPWorm.exe', ns.httpworm],
+				['relaySMTP.exe', ns.relaysmtp],
+				['SQLInject.exe', ns.sqlinject]
 			].forEach(exe => {
 				if (ns.fileExists(exe[0])) {
 					exe[1](target);

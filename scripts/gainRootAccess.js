@@ -1,4 +1,4 @@
-/** @param { import("../.").NS } ns */
+/** @param { import('../.').NS } ns */
 export function main(ns) {
     ns.disableLog(`ALL`);
 	
@@ -6,11 +6,11 @@ export function main(ns) {
     try {
         // skipcq: JS-D008
         [
-            ["BruteSSH.exe", ns.brutessh],
-            ["FTPCrack.exe", ns.ftpcrack],
-            ["HTTPWorm.exe", ns.httpworm],
-            ["relaySMTP.exe", ns.relaysmtp],
-            ["SQLInject.exe", ns.sqlinject]
+            ['BruteSSH.exe', ns.brutessh],
+            ['FTPCrack.exe', ns.ftpcrack],
+            ['HTTPWorm.exe', ns.httpworm],
+            ['relaySMTP.exe', ns.relaysmtp],
+            ['SQLInject.exe', ns.sqlinject]
         ].forEach(exe => {
             if (ns.fileExists(exe[0])) {
                 exe[1](target);
